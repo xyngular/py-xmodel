@@ -188,9 +188,6 @@ class RemoteApi(BaseApi[M]):
         .. attention:: If we ever have an API that can't accept multiple values for a key
             like we show in the above example; we would need to send each item in the list
             in individual requests.  Need to add support for that when we need it.
-            Right now we can send multiple values and get multiple objects back in a single
-            request for all the API's we currently deal with via the SDK
-            (hubspot/xyngular/big-commerce).
 
         This method is nice to use vs doing a generic query with the id/key, due to the fact
         we will look for cached object if the sub-class has the cache ny id enabled.
@@ -658,7 +655,7 @@ class RemoteApi(BaseApi[M]):
 
         .. todo::  At some point in the near future I want to revamp these options and put them
             in some sort of public resource, a resource that's behaviors sort of like
-            how `xyn_config.config.Config` or `xmodel.fields.Field` works... in that you
+            how `xcon.config.Config` or `xmodel.fields.Field` works... in that you
             can set various options/attributes and ones that are unset are 'inherited' from any
             parent Config / Field. This would make it simpler to use in a temporary fashion
             Perhaps do something like this when we get to splitting the orm into separate library.

@@ -111,15 +111,15 @@ class BaseModel(Generic[M], ABC):
 
         You can specify this as a type-hint in subclasses to change the class we use for this
         automatically, like so::
-            from xyn_sdk import base
+            from xmodel import BaseModel, BaseApi
             from typing import TypeVar
 
             M = TypeVar("M")
 
-            class MyCoolApi(base.BaseApi[M]):
+            class MyCoolApi(BaseApi[M]):
                 pass
 
-            class MyCoolModel(base.BaseModel["MyCoolModel"]):
+            class MyCoolModel(BaseModel["MyCoolModel"]):
                 api: MyCoolApi[M]  # If this model will have subclasses, you want to use a type-var
 
         The generic ``T`` type-var in this case refers to whatever model class that your using.
@@ -161,7 +161,7 @@ class BaseModel(Generic[M], ABC):
         `xmodel.base.structure.BaseStructure` subclass. You can configure your BaseModel to use
         this BaseStructure subclass via a type-hint on `xmodel.base.api.BaseApi.structure`.
 
-        See `xyn_sdk.dynamo.DynStructure.configure_for_model_type` for a complete example of a
+        See `xmodel_dynamo.dynamo.DynStructure.configure_for_model_type` for a complete example of a
         custom BaseStructure subclass that adds extra class arguments that are specific to Dynamo.
 
         Args:

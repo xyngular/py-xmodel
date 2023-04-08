@@ -41,7 +41,7 @@ class BaseStructure(Generic[F]):
 
     Example getting the structure object for the Account model/api:
 
-    >>> from xyn_sdk.account import Account
+    >>> from some_lib.account import Account
     >>> structure = Account.api.structure
     """
 
@@ -214,7 +214,7 @@ class BaseStructure(Generic[F]):
             object/model.
 
             It may be better at some point in the long-run to rename this field to more indicate
-            that; perhaps the next time we have a breaking-change we need to do for xyn-model.
+            that; perhaps the next time we have a breaking-change we need to do for xmodel.
 
             For now, we are leaving the name along and hard-coding this to
             return False in BaseStructure, and to return True in RemoteStructure.
@@ -386,7 +386,7 @@ class BaseStructure(Generic[F]):
                     "with api_path. "
 
                     # Copy/Paste from `BaseApi.json`:
-                    f"Can't have xyn_sdk Field on BaseModel with related-type and a json_path "
+                    f"Can't have xmodel.Field on BaseModel with related-type and a json_path "
                     f"that differ at the moment, for field ({field_obj}). "
                     f"It is something I want to support someday; the support is mostly in place "
                     f"already, but it needs some more careful thought, attention and testing "

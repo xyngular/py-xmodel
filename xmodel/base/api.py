@@ -73,9 +73,9 @@ Here is an example of how to customize/define/configure each part of the system:
 >>>import xmodel.base.auth
 >>>import xmodel
 >>>
->>> class MySettings(xmodel.base.settings.RestSettings):
-...     # This looks up CUSTOM_ENV_VAR via current Config (xyn_config)
-...     my_custom_var: str = xyn_settings.ConfigVar("CUSTOM_ENV_VAR", "default")
+>>> # TODO: This example is WAY out of date, normalize with the modern `xsettings` lib.
+>>> class MySettings(xmodel_test.base.settings.RestSettings):
+...     my_custom_var: str = settings.ConfigVar("CUSTOM_ENV_VAR", "default")
 >>>
 >>> class MyAuth(auth.RelationAuth):
 ...     pass
@@ -234,9 +234,9 @@ class BaseApi(Generic[M]):
 
     You can provide your own values for this directly in a sub-class,
     when an BaseApi or subclass is created, we will merge converters in this order,
-    with things later in the order taking precedie and override it:
+    with things later in the order taking precedence and override it:
 
-    1. `xyn_mode.converters.DEFAULT_CONVERTERS`
+    1. `xmodel.converters.DEFAULT_CONVERTERS`
     2. `BaseApi.default_converters` from `xmodel.base.model.BaseModel.api` from parent model.
         The parent model is the one the model is directly inheriting from.
     3. Finally, `BaseApi.default_converters` from the BaseApi subclass's class attribute
@@ -443,8 +443,8 @@ class BaseApi(Generic[M]):
         class.
 
         Examples:
-        >>> # Grab Account model from xyn_sdk (as an example).
-        >>> from xyn_sdk.account import Account
+        >>> # Grab Account model from some_lib (as an example).
+        >>> from some_lib.account import Account
         >>>
         >>> # api object is associated with MyModelClass class, not model obj.
         >>> Account.api
@@ -537,7 +537,6 @@ class BaseApi(Generic[M]):
                 You can override the RestClient.enable_send_changes_only at the BaseModel class
                 level by making a RestClient subclass and setting `enable_send_changes_only` to
                 default to `True`.
-                For a real example of this, see `xyn_sdk.core.account.AccountClient`.
 
                 There is a situations where we have to include all attributes, regardless:
                     1. If the 'id' field is set to a 'None' value. This indicates we need to create
@@ -602,7 +601,7 @@ class BaseApi(Generic[M]):
                 # for now, keep raising an exception for this like we have been.
                 # There is a work-around, see bottom part of the message in the below error:
                 raise NotImplementedError(
-                    f"Can't have xyn_sdk Field on BaseModel with related-type and a json_path "
+                    f"Can't have xmodel.Field on BaseModel with related-type and a json_path "
                     f"that differ at the moment, for field ({field_obj}). "
                     f"It is something I want to support someday; the support is mostly in place "
                     f"already, but it needs some more careful thought, attention and testing "
@@ -797,10 +796,10 @@ class BaseApi(Generic[M]):
             If False: Won't include the fields value in an update.
         """
         # Convert old value to set if new value is set and old value is list (from original JSON).
-        # If I was really coooool :)... I would find out the inner type in case of int/str
+        # If I was really cool :)... I would find out the inner type in case of int/str
         # and to a conversion to compare Apples to Apples.....
         # But trying to minimize changes so I don't conflict as much with soon to be
-        # xyn_sdk dynamo feature.
+        # xmodel-dynamo feature.
         if type(new_value) is set and type(old_value) is list:
             old_value = set(old_value)
 
@@ -962,15 +961,11 @@ class BaseApi(Generic[M]):
                 #   for now, just comment out.
 
                 raise NotImplementedError(
-                    "Type-hints for xyn_sdk models in this format: `attr: List[SomeType]` "
+                    "Type-hints for xmodel models in this format: `attr: List[SomeType]` "
                     "are not currently supported. We want to support it someday. For now you "
                     "must use lower-cased non-generic `list`. At some point the idea is to "
                     "allow one to do `List[ChildModel]` and then we know it's a list of "
                     "other BaseModel objects and automatically handle that in some way."
-                    "This would "
-                    "be useful in big-commerce especially, right now it handles this on it's "
-                    "own but it would be useful to make it more generically used within the "
-                    "xyn_sdk it's self. This was a start to do that but was not finished."
                 )
 
                 # child_type: 'Type[BaseModel[M]]'
@@ -1069,7 +1064,7 @@ class BaseApi(Generic[M]):
             If forgotten, it's as-if we never got the json in the first place to compare against.
             Therefore, all attributes that have values will be returned for this object
             when it's only requested to include changes
-            (the RestClient in xyn-model-rest can request it to do this, as an example).
+            (the RestClient in xmodel-rest can request it to do this, as an example).
 
             Resetting the state here only effects this object, not any child objects.
             You'll have to ask child objects directly to forget t heir original json, if desired.

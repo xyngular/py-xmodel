@@ -1,19 +1,17 @@
 """
 Provides easy way to map dict to/from Full-Fledged 'JsonModel' object.
 
-Also, an abstract RemoteModel interface used in xyn-model-rest and xyn-model-dynamo along with
+Also, an abstract RemoteModel interface used in xmodel-rest and xmodel-dynamo along with
 some common code.
 
-.. important:: Doc-comments in varius classes may have bad links back to xynlib
-    along with other issues.  They will be updated in the near-future.
-    Focus on docs just below, which are pulled from the README.md#how-to-use
+.. important:: Doc-comments in varius classes have out-of-date/broken refs; will be fixed soon.
 
 ..include:: ../README.md
     :start-after: ## How To Use
 
 
 .. important:: Docs Below Are OUT OF DATE!!!
-    Most of the docs below belong int xyn-model-rest and xyn-model-dynamo.
+    Most of the docs below belong int xmodel-rest and xmodel-dynamo.
     We will revamp them soon, and put more into the README.md as well.
     Currently, I would look at the docs above or README.md for info on how to use
     `JsonModel` class, which is the main-class of this library.
@@ -41,8 +39,8 @@ Right now this includes:
 
 Some reasons to use orm:
 
-- The foundation for `xynsdk` library's Model objects.
-    - Let's us easily map objects into/out of various xyngular API's.
+- The foundation for `xmodel-rest` library's Model objects.
+    - Let's us easily map objects into/out of various rest API's.
     - Handles breaking up requests to get objects by id transparently into
         several sub-requests.
     - Does pagination for you automatically
@@ -61,17 +59,6 @@ Some reasons to use orm:
 Some of the Models classes are kept directly in their respective projects (such as with hubspot).
 In these cases, you can import that project as a Library to utilize it's Model's and to also
 utilize it's other code/processes (which probably work closely with the Model's in question).
-
-If the Model is very commonly used across-projects, then the model class definitions can be placed
-directly inside of xyn_sdk. One such example is the `xyn_sdk.account.Account` which is
-used in many different places since it represents basic account/customer information.
-
->>> from xyn_sdk.account import Account
->>> account = Account.api.get_via_id(3)
->>> print(account.account_no)
-"3"
-
-That's an example of getting account 2312 via account-api, and seeing what their account_no is.
 
 ## Model Fields
 [model-fields]: #model-fields
@@ -292,7 +279,7 @@ for the attribute when creating the class/object.
 
 Going back to this example (from end of the [ORM Library Overview](#orm-library-overview) section):
 
->>> from xyn_sdk.account import Account
+>>> from some_lib.account import Account
 >>> account = Account.api.get_via_id(3)
 >>> print(account.account_no)
 "3"
@@ -367,11 +354,11 @@ when something asks for it again.
 [auto-prefetch-children]: #auto-prefetch-children
 
 You can also pre-fetch these child objects in bulk if you have a collection of model objects (such
-as a `List` of `xyn_sdk.account.Account`'s) via `xmodel.children.bulk_request_lazy_children`.
+as a `List` of `some_lib.account.Account`'s) via `xmodel.children.bulk_request_lazy_children`.
 This is much more efficient if you have a lot of objects because it can grab many of the children
 pre-request.
 
-.. todo:: At some point the xyn_sdk will probably fetch many child objects lazily in bulk.
+.. todo:: At some point the xmodel-rest will probably fetch many child objects lazily in bulk.
     When someone accesses one lazily, it could grab more for other Model objects that don't have
     their children fetched yet. We just put in a weak-ref cache, so using this we could
     find the ones that we have fetched in the past and and are still around.
@@ -379,15 +366,15 @@ pre-request.
     (ie: so we fetch original child requested, along with 50 more or so via a single request).
 
 
-You can also have the xyn_sdk do this automatically as it receives pages of objects via
+You can also have the xmodel do this automatically as it receives pages of objects via
 `xmodel.options.ApiOptions.auto_get_child_objects` like so:
 
 >>> Account.api.options.auto_get_child_objects = True
 
-This sets this option for this Model type in the current `xynlib.context.XContext`.
+This sets this option for this Model type in the current `xinject.context.XContext`.
 If you make a new XContext, and then throw the XContext away, it will revert these option changes.
 
->>> from xynlib.context import XContext
+>>> from xinject.context import XContext
 >>>
 >>> # Starts out as False....
 >>> assert not Account.api.options.auto_get_child_objects
@@ -449,7 +436,7 @@ You can enable strong-ref caching in three ways currently:
 ...     api_options = ApiOptions(cache_by_id=True)
 
 The strong cache is useful for caching objects that almost never change.
-For example, `xyn_sdk.account.Rank` strongly caches it's objects by default.
+
 
 ### Weak-Ref Caching
 
@@ -475,7 +462,7 @@ You can enable weak-caching via the `xmodel.weak_cache_pool.WeakCachePool`.
 There is an enable property on it that you set to `True` to enable the caching.
 See `xmodel.weak_cache_pool.WeakCachePool.enable`.
 
-It's a `xynlib.context.Dependency`, and so can be used like any other normal resource.
+It's a `xinject.context.Dependency`, and so can be used like any other normal resource.
 You can set the enable property on the current resource to make it more permently on.
 
 >>> WeakCachePool.grab().enabled = True
@@ -498,12 +485,13 @@ objects instead of using previously cached ones.
 
 """
 
-from xmodel.base import (
+from .base import (
     BaseModel, BaseApi, BaseStructure
 )
-from xmodel.base.fields import Field, Converter
-from xmodel.errors import XModelError
-from xmodel.json import JsonModel
+from .base.fields import Field, Converter
+from .errors import XModelError
+from .json import JsonModel
+from .remote.weak_cache_pool import WeakCachePool
 
 
 __all__ = [

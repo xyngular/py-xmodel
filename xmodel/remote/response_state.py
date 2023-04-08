@@ -73,9 +73,7 @@ class ResponseState(Generic[T]):
         You can use retry_send to mark an object as needing to be retried while it's error handler,
         or while the `RestClient.parse_send_response_error` method is called for object.
 
-        Use `HttpState.has_field_error` to easily see if there was a specific type of field error
-        (if API supports and we parse field-level errors, `xyn_sdk` provides this for our
-        own xyngular API's)
+        Use `HttpState.has_field_error` to easily see if there was a specific type of field error.
 
         Also useful:
 

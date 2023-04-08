@@ -32,7 +32,6 @@ class ModelChildRef:
 
 
 # todo:  Need to go over this method and convert it for use in the sdk, it's been copied from
-# todo:  xyndw at the moment and needs to be converted.
 def get_all_existent_child_objects(
         objs: List[BaseModel],
         need_endpoint=True,
@@ -110,7 +109,6 @@ def get_all_existent_child_objects(
 
 
 # todo:  Need to go over this method and convert it for use in the sdk, it's been copied from
-# todo:  xyndw at the moment and needs to be converted.
 def bulk_request_lazy_children(objs: Union[BaseModel, Sequence[BaseModel]]):
     """
     .. important:: This method currently only gets one 'level' of sub-objects;

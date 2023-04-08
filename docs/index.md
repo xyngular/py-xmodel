@@ -38,7 +38,7 @@ assert json_dict == json_dict_input
 
 
 
-Also, an abstract RemoteModel interface used in xyn-model-rest and xyn-model-dynamo along with
+Also, an abstract RemoteModel interface used in xmodel-rest and xmodel-dynamo along with
 some common code.
 
 
@@ -218,6 +218,6 @@ of the RemoteModel and related classes, abstract interfaces.
 
 I won't say much more about it here.
 See relevant classes/modules doc-comments for more details.
-You can also look at xyn-model-rest and xyn-model-dynamo for concreate,
+You can also look at xmodel-rest and xmodel-dynamo for concreate,
 real-world implementations.
 
