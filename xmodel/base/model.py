@@ -60,14 +60,14 @@ class BaseModel(Generic[M], ABC):
     In the example below, notice the `base_url` part. That's a class argument, that is used by the
     super-class during the construction of the sub-class (before any instances are created).
     In this case it takes this and stores it on
-    `xynlib.orm.rest.RestStructure.base_model_url`
+    `xmodel.rest.RestStructure.base_model_url`
     as part of the structure information for the `BaseModel` subclass.
 
     See [Basic Model Example](./#basic-model-example) for an example of what class arguments
     are or look at this example below using a RestModel:
 
     >>> # 'base_url' part is a class argument:
-    >>> from xynlib.orm.rest import RestModel
+    >>> from xmodel.rest import RestModel
     >>> class Account(RestModel["Account"], base_url='/account'):
     >>>    id: str
     >>>    name: str
@@ -79,7 +79,7 @@ class BaseModel(Generic[M], ABC):
     See `BaseModel.__init_subclass__` for more on the internal details of how this works exactly.
 
     .. note:: In the case of `base_url` example above, it's the base-url-endpoint for the model.
-        If you want to know more about that see `xynlib.orm.rest.RestClient.url_for_endpoint`.
+        If you want to know more about that see `xmodel.rest.RestClient.url_for_endpoint`.
         It has details on how the final request `xurls.url.URL` is constructed.
 
     This class also allows you to more easily with with JSON data via:
@@ -91,8 +91,8 @@ class BaseModel(Generic[M], ABC):
     Other important related classes are listed below.
 
     - `xmodel.base.api.BaseApi` Accessable via `BaseModel.api`.
-    - `xynlib.orm.rest.RestClient`: Accessable via `xmodel.base.api.BaseApi.client`.
-    - `xynlib.orm.rest.settings.RestSettings`: Accessable via
+    - `xmodel.rest.RestClient`: Accessable via `xmodel.base.api.BaseApi.client`.
+    - `xmodel.rest.settings.RestSettings`: Accessable via
         `xmodel.base.api.BaseApi.settings`.
     - `xmodel.base.structure.BaseStructure`: Accessable via
         `xmodel.base.api.BaseApi.structure`

@@ -51,7 +51,7 @@ Some reasons to use orm:
     - hubspot and bigcommerce projects use to to access their services api.
 - Consistant interface, works the same wherever it's used
     (vs one-off methods inside the project doing the same things in diffrent ways).
-- `xynlib.orm.dynamo`: A library to map objects into Dynamo, we consolidated code from
+- `xmodel.dynamo`: A library to map objects into Dynamo, we consolidated code from
     a few diffrent projects
     - Easily map objects into and out of Dynamo.
     - No need to duplicate code for things like paginating the results.
@@ -87,7 +87,7 @@ being the `base_url` which is one of elements that construct's the url/path to i
 ### Basic Model Example
 [model-fields]: #basic-model-example
 
->>> from xynlib.orm import Field, BaseModel
+>>> from xmodel import Field, BaseModel
 >>> import datetime as dt
 >>>
 >>> class MyModel(
@@ -107,14 +107,14 @@ being the `base_url` which is one of elements that construct's the url/path to i
 [type-hints]: #type-hints
 
 When Model classes are created, they will lazily find type-hinted attributes and determine
-if a `xynlib.orm.fields.Field` should automatically be created for them.
-A `xynlib.orm.fields.Field` is what is used by the sdk to map an attribute into it's corresponding
+if a `xmodel.fields.Field` should automatically be created for them.
+A `xmodel.fields.Field` is what is used by the sdk to map an attribute into it's corresponding
 JSON field that is sent/retrieved from the API service.
 
 You can specify other types, such as datetime/date types.
 The SDK has a default converter in place for datetime/date types.
 You can define other default converters, see [Type Converters](#type-converters) for more details.
-Converters can also be used on a per-field basis via `xynlib.orm.fields.Field.converter`.
+Converters can also be used on a per-field basis via `xmodel.fields.Field.converter`.
 
 The Model will enforce these type-hints, and use a converter if needed and one is available.
 
@@ -146,15 +146,15 @@ could have come from a JSON string.
 ### Field Objects
 [field-objects]: #field-objects
 
-A `xynlib.orm.base.model.BaseModel` has a set of `xynlib.orm.fields.Field`'s that define how each
+A `xmodel.base.model.BaseModel` has a set of `xmodel.fields.Field`'s that define how each
 field will map to an attribute to/from JSON, which we currently use for all of our APIs.
 See [JSON](#json) for more details.
 
-You can get a list of `xynlib.orm.fields.Field`'s via `xynlib.orm.base.api.BaseApi.fields`.
+You can get a list of `xmodel.fields.Field`'s via `xmodel.base.api.BaseApi.fields`.
 This will allow you do iterate over all the fields the system will use when interacting
 with JSON documents.
 
-If you don't allocate a `xynlib.orm.fields.Field` object directly on the Class at class definition
+If you don't allocate a `xmodel.fields.Field` object directly on the Class at class definition
 time we will auto-generate them for you. It will only do this for fields that have a type-hint.
 If there is no type-hint, we won't auto-allocate a Field for it, and hence we won't
 map it to/from the [JSON](#json), enforce the types or auto-convert them.
@@ -163,19 +163,19 @@ See [Type Hints](#type-hints).
 #### Field Subclasses
 
 You can have your own Field sub-class if you wish. To guarantee all auto-generated fields
-use you class, you can set the type on `xynlib.orm.base.structure.Structure.field_type`.
+use you class, you can set the type on `xmodel.base.structure.Structure.field_type`.
 
 This needs to be set before any Model class that uses it is initialized.
-You can do that by subclassing `xynlib.orm.base.structure.Structure` and setting it at class
+You can do that by subclassing `xmodel.base.structure.Structure` and setting it at class
 definition time. You then tell your BaseApi's to use your new structure.
 
-For an example of doing all of this and also creating a custom `xynlib.orm.fields.Field` subclass,
-see `xynlib.orm.dynamo.DynField`. We use this in our Dynamo-related code to put additional
+For an example of doing all of this and also creating a custom `xmodel.fields.Field` subclass,
+see `xmodel.dynamo.DynField`. We use this in our Dynamo-related code to put additional
 options on model Fields that are only really useful for Dynamo models.
 
 But the general idea is this:
 
->>> from xynlib.orm import BaseStructure.....
+>>> from xmodel import BaseStructure.....
 # todo: Finish this example.
 
 ### JSON
@@ -184,10 +184,10 @@ But the general idea is this:
 Right now all of our API's accept and return JSON.
 The Models handle JSON natively.  This means you can also use Model's
 to more easily deal with JSON without necessarily having to use any of the
-`xynlib.orm.rest.RestClient` aspects (send/receive).
-This is what we did with Dynamo at first, we simply grabbed the json via `xynlib.orm.base.api.json`
+`xmodel.rest.RestClient` aspects (send/receive).
+This is what we did with Dynamo at first, we simply grabbed the json via `xmodel.base.api.json`
 and send that directly into boto.
-Later on we put together a special `xynlib.orm.dynamo.DynClient`
+Later on we put together a special `xmodel.dynamo.DynClient`
 to automatically send/receive it via boto (wraps boto).
 
 Some the the reasons why it may be easier is due to the Model's in combination with the Fields.
@@ -195,25 +195,25 @@ You can easily define a mapping and automatic type-conversion with only a simple
 
 .. hint:: What about API's that use a non-JSON format?
     If we ever have an API that has some other format, we would have a
-    `xynlib.orm.rest.RestClient` subclass that would handle mapping it to/from the JSON that
+    `xmodel.rest.RestClient` subclass that would handle mapping it to/from the JSON that
     we use on the Models. After RestClient gets a response, it would make a Dict out of it as if
     it got it from JSON and give that to the Model; and vic-versa (map from Dict into API format).
 
 
 ## Model.api
 
-You can also export or update an existing `xynlib.orm.base.model.BaseModel` object via methods
-under a special attribute `xynlib.orm.base.model.BaseModel.api`. This attribute has a reserved name
+You can also export or update an existing `xmodel.base.model.BaseModel` object via methods
+under a special attribute `xmodel.base.model.BaseModel.api`. This attribute has a reserved name
 on every Model. This attribute is how the Model interfaces with the rest of the SDK.
 That way the rest of the namespace for the Model attributes is available for use by Model subclass.
 
 You can update an object via a dict from parse JSON via
-`xynlib.orm.base.api.BaseApi.update_from_json`.
-Exporting JSON is easily done via `xynlib.orm.base.api.BaseApi.json`.  Both of these methods
-accept/return a `xynlib.orm.types.JsonDict`, which is just a `dict` with `str`
+`xmodel.base.api.BaseApi.update_from_json`.
+Exporting JSON is easily done via `xmodel.base.api.BaseApi.json`.  Both of these methods
+accept/return a `xmodel.types.JsonDict`, which is just a `dict` with `str`
 keys and `Any` value.
 
-`xynlib.orm.base.model.BaseModel.api` is also how you can easily get/send objects to/from the
+`xmodel.base.model.BaseModel.api` is also how you can easily get/send objects to/from the
 API service.
 
 
@@ -221,7 +221,7 @@ There are various ways to change/customize a model, keep reading further.
 
 ## BaseApi Class
 
-One of the more important classes is `xynlib.orm.base.api.BaseApi`.
+One of the more important classes is `xmodel.base.api.BaseApi`.
 
 For an overview of the class see [BaseApi Class Overview](./api.html#api-class-overview)
 api.html#use-of-type-hints-for-changing-used-type
@@ -237,17 +237,17 @@ For more details see
 [type-converters]: #type-converters
 
 The mapping of basic types to their converter function lives at
-`xynlib.orm.base.api.BaseApi.default_converters`. Normally you could customize this by
-by subclassing `xynlib.orm.base.api.BaseApi` with your own version for you Model(s).
-You can also change it dynamically via adjusting `xynlib.orm.base.api.BaseApi.default_converters`.
+`xmodel.base.api.BaseApi.default_converters`. Normally you could customize this by
+by subclassing `xmodel.base.api.BaseApi` with your own version for you Model(s).
+You can also change it dynamically via adjusting `xmodel.base.api.BaseApi.default_converters`.
 
-For the default converter map, see `xynlib.orm.converters.DEFAULT_CONVERTERS`.
+For the default converter map, see `xmodel.converters.DEFAULT_CONVERTERS`.
 
 .. todo::
     ## This is how I want it to work in the future:
 
-    Something to keep in mind is when the xynlib.orm.base.api.BaseApi converts a type, and it needs
-    a lookup a default converter it uses `xynlib.orm.base.api.BaseApi.get_default_converter`.
+    Something to keep in mind is when the xmodel.base.api.BaseApi converts a type, and it needs
+    a lookup a default converter it uses `xmodel.base.api.BaseApi.get_default_converter`.
     This method first checks it's self, and if type to convert is not in dict, it will check
     the superclasses default converters and so on until one is found.
 
@@ -256,9 +256,9 @@ For the default converter map, see `xynlib.orm.converters.DEFAULT_CONVERTERS`.
     but most other systems use the normal ISO date/time format. So for the BaseApi class that all
     hubspot Model's use, they have the datetime converter overriden with a special Hubspot version.
 
-You can also set a converter per-field via a callback on a `xynlib.orm.fields.Field` object.
+You can also set a converter per-field via a callback on a `xmodel.fields.Field` object.
 
-All converters have a calling convention, see `xynlib.orm.fields.Converter` for details.
+All converters have a calling convention, see `xmodel.fields.Converter` for details.
 
 ## RestClient Class
 
@@ -352,7 +352,7 @@ the object on demand when it's asked for.
 It knows `preferred_phone_number` is a `PhoneNumber` model type
 (and that it's also associated with a diffrent api endpoint) and it knows the id,
 so it simply asks for it on demand/lazily via `ChildType.api.get_via_id`
-(aka: `xynlib.orm.base.api.BaseApi.get_via_id`).
+(aka: `xmodel.base.api.BaseApi.get_via_id`).
 
 
 It automatically takes this `preferred_phone_number_id`` and looks-up the preferred phone number
@@ -367,7 +367,7 @@ when something asks for it again.
 [auto-prefetch-children]: #auto-prefetch-children
 
 You can also pre-fetch these child objects in bulk if you have a collection of model objects (such
-as a `List` of `xyn_sdk.account.Account`'s) via `xynlib.orm.children.bulk_request_lazy_children`.
+as a `List` of `xyn_sdk.account.Account`'s) via `xmodel.children.bulk_request_lazy_children`.
 This is much more efficient if you have a lot of objects because it can grab many of the children
 pre-request.
 
@@ -380,7 +380,7 @@ pre-request.
 
 
 You can also have the xyn_sdk do this automatically as it receives pages of objects via
-`xynlib.orm.options.ApiOptions.auto_get_child_objects` like so:
+`xmodel.options.ApiOptions.auto_get_child_objects` like so:
 
 >>> Account.api.options.auto_get_child_objects = True
 
@@ -422,11 +422,11 @@ By default, they are both disabled.  They are explicitly an opt-in feature.
 
 You can enable strong-ref caching in three ways currently:
 
--  Set it on directly on `xynlib.orm.base.api.BaseApi.options.cache_by_id=True`
+-  Set it on directly on `xmodel.base.api.BaseApi.options.cache_by_id=True`
 
 -  Set `cache_by_id=True` as one of the model classes options, like so:
 
->>> from xynlib.orm import ApiOptions
+>>> from xmodel import ApiOptions
 >>> class MyModel(RestModel['MyModel'], api_options=ApiOptions(cache_by_id=True)):
 ...     account_id: int
 ...     number: str
@@ -434,13 +434,13 @@ You can enable strong-ref caching in three ways currently:
 ...     is_active: bool
 
 
--  Via a subclass of a structure, such as `xynlib.orm.rest.RestStructure`,
-   and setting it's `xynlib.orm.base.structure.BaseStructure.api_options` to a default set
+-  Via a subclass of a structure, such as `xmodel.rest.RestStructure`,
+   and setting it's `xmodel.base.structure.BaseStructure.api_options` to a default set
    that are used by default for new Model sub-classes that use that Structure subclass.
    Here is an example:
 
 >>> from typing import TypeVar
->>> from xynlib.orm import Field
+>>> from xmodel import Field
 >>>
 >>> F = TypeVar(name="F", bound=Field)
 >>> class AlwaysEnableCacheByIDStructure(RestStructure[F]):
@@ -467,23 +467,23 @@ fetch-request.
 Another place this can be useful is when query objects that are in a tree.
 And objects parent could be referenced by several children.
 
-You can enable weak-caching via the `xynlib.orm.weak_cache_pool.WeakCachePool`.
-`xynlib.orm` imports this, so you can import it easily via:
+You can enable weak-caching via the `xmodel.weak_cache_pool.WeakCachePool`.
+`xmodel` imports this, so you can import it easily via:
 
->>> from xynlib.orm import WeakCachePool
+>>> from xmodel import WeakCachePool
 
 There is an enable property on it that you set to `True` to enable the caching.
-See `xynlib.orm.weak_cache_pool.WeakCachePool.enable`.
+See `xmodel.weak_cache_pool.WeakCachePool.enable`.
 
 It's a `xynlib.context.Dependency`, and so can be used like any other normal resource.
 You can set the enable property on the current resource to make it more permently on.
 
 >>> WeakCachePool.grab().enabled = True
 
-Or you can temporarly enable it by creating a new `xynlib.orm.weak_cache_pool.WeakCachePool`
+Or you can temporarly enable it by creating a new `xmodel.weak_cache_pool.WeakCachePool`
 object and activating it temporarily.
 
->>> from xynlib.orm import WeakCachePool
+>>> from xmodel import WeakCachePool
 >>> @WeakCachePool(enabled=True)
 >>> def lambda_event_handler(event, context):
 ...    pass

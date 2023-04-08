@@ -23,7 +23,7 @@ class ErrorHandler(Generic[T], ABC):
         """
         Signature of the call that happens for an HttpErrorHandler.
 
-        Keep in mind that xynlib.orm.rest.RestClient only checks for this for POST/PUT/PATCH
+        Keep in mind that xmodel.rest.RestClient only checks for this for POST/PUT/PATCH
         at the moment. I want to expand it's use to other methods in the future.
 
         Different things happen based on what's returned:
@@ -83,7 +83,7 @@ class ResponseState(Generic[T]):
         - `HttpState.did_send`
 
         `HttpState.try_count` is incremented each time the object had an attempt to send it.
-        The `xynlib.orm.rest.RestClient` by default will only retry 4 times,
+        The `xmodel.rest.RestClient` by default will only retry 4 times,
         to prevent infinite loops.
     """
 
@@ -114,15 +114,15 @@ class ResponseState(Generic[T]):
     the field errors. Field are are just more specific information about the error(s) with the
     request.
 
-    You can subclass the `xynlib.orm.rest.RestClient` class and override
-    `xynlib.orm.rest.RestClient.parse_errors_from_send_response`
+    You can subclass the `xmodel.rest.RestClient` class and override
+    `xmodel.rest.RestClient.parse_errors_from_send_response`
     (go there for more docs/details about this).
 
     You can get a `xmodel.base.model.BaseModel`'s response_state state from
     `xmodel.remote.api.RemoteApi.response_state` via `xmodel.base.model.BaseModel.api`.
 
     If you want to parse out field errors and add them to the `model_obj.api.response_state`
-    see `xynlib.orm.rest.RestClient.parse_errors_from_send_response`.
+    see `xmodel.rest.RestClient.parse_errors_from_send_response`.
     """
 
     response_code: Optional[int] = None
@@ -132,7 +132,7 @@ class ResponseState(Generic[T]):
     """ If value is:
 
         - `True`: Object was sent to API.
-        - `False`: Then `xynlib.orm.rest.RestClient.enable_send_changes_only` was enabled for
+        - `False`: Then `xmodel.rest.RestClient.enable_send_changes_only` was enabled for
             client and it was determined the object did not have any changes to send.
         - `None`: No determination has been made yet or an attempt to send object has not happened
             yet.
@@ -150,7 +150,7 @@ class ResponseState(Generic[T]):
     """ The system uses this to mark something that had an error, that it should be retried.
         You should use 'HttpState.retry_send()` if you want to mark something to retry.
 
-        The `xynlib.orm.rest.RestClient` will call `HttpState.reset` passing in `for_retry=True`
+        The `xmodel.rest.RestClient` will call `HttpState.reset` passing in `for_retry=True`
         right before it actually does the retry.
     """
 
@@ -160,7 +160,7 @@ class ResponseState(Generic[T]):
         If this is None, then we check the `error_handler` in
         `xmodel.options.ApiOptions.error_handler`
         {via `xmodel.api.BaseApi.option_for_name`('error_handler')}. If that turns up nothing
-        the `xynlib.orm.rest.RestClient` will do whatever the standard error handling is.
+        the `xmodel.rest.RestClient` will do whatever the standard error handling is.
 
         Normally it would move on to to send next object so it can update as many objects as it
         can (if there are more to send). An exception is normally only raised if there is a more

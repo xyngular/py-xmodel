@@ -491,7 +491,7 @@ class BaseStructure(Generic[F]):
 
             I expect this to be overridden by the concrete implementation, see examples here:
 
-            - `xynlib.orm.rest.RestStructure.endpoint_description`
-            - `xynlib.orm.dynamo.DynStructure.endpoint_description`
+            - `xmodel.rest.RestStructure.endpoint_description`
+            - `xmodel.dynamo.DynStructure.endpoint_description`
         """
         return "?"

@@ -530,9 +530,9 @@ class BaseApi(Generic[M]):
                 If only_include_changes is False (default), we always include everything that
                 is not 'None'.
                 When a `xmodel.base.client.BaseClient` subclass
-                (such as `xynlib.orm.rest.RestClient`)
+                (such as `xmodel.rest.RestClient`)
                 calls this method, it will pass in a value based on it's own
-                `xynlib.orm.rest.RestClient.enable_send_changes_only` is set to
+                `xmodel.rest.RestClient.enable_send_changes_only` is set to
                 (defaults to False there too).
                 You can override the RestClient.enable_send_changes_only at the BaseModel class
                 level by making a RestClient subclass and setting `enable_send_changes_only` to

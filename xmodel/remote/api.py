@@ -50,7 +50,7 @@ class RemoteApi(BaseApi[M]):
             Example:
 
                 >>> from typing import TypeVar
-                >>> from xynlib.orm import RestApi, RestClient
+                >>> from xmodel import RestApi, RestClient
                 >>> M = TypeVar("M")  # <-- This allows IDE to do better code completion.
                 >>>
                 >>> class MyClient(RestClient[M]):

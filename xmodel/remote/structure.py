@@ -63,7 +63,7 @@ class RemoteStructure(BaseStructure[F]):
     ## How to change Dynamically:
 
     If you want to change it dynamically, set the options via the Model types
-    `xynlib.orm.base.api.BaseApi.options`, ie: `MyModel.api.options.cache_by_id = True`.
+    `xmodel.base.api.BaseApi.options`, ie: `MyModel.api.options.cache_by_id = True`.
     """
 
     def configure_for_model_type(

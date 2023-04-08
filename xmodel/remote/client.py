@@ -41,11 +41,11 @@ class RemoteClient(Generic[M]):
 
     """ Abstract type from which any client class is descended from.
 
-            Most of the time, you'll want to use `xynlib.orm.rest.RestClient` directly or as a
+            Most of the time, you'll want to use `xmodel.rest.RestClient` directly or as a
             subclass.
 
             It's rare that you'll need to inherit from this (ie: think something like
-            `xynlib.orm.dynamo.DynClient`, where your client is radically different on the inside
+            `xmodel.dynamo.DynClient`, where your client is radically different on the inside
             but you want to look like a normal client class on the outside)
         """
 
