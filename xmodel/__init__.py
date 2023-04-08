@@ -6,9 +6,6 @@ some common code.
 
 .. important:: Doc-comments in varius classes have out-of-date/broken refs; will be fixed soon.
 
-..include:: ../README.md
-    :start-after: ## How To Use
-
 
 .. important:: Docs Below Are OUT OF DATE!!!
     Most of the docs below belong int xmodel-rest and xmodel-dynamo.
