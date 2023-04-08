@@ -502,7 +502,7 @@ from xmodel.base import (
     BaseModel, BaseApi, BaseStructure
 )
 from xmodel.base.fields import Field, Converter
-from xmodel.errors import XynModelError
+from xmodel.errors import XModelError
 from xmodel.json import JsonModel
 
 
@@ -512,7 +512,7 @@ __all__ = [
     'BaseStructure',
     'Field',
     'Converter',
-    'XynModelError',
+    'XModelError',
     'JsonModel'
 ]
 

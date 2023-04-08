@@ -4,7 +4,7 @@ from xmodel.base.fields import Converter, Field
 import datetime as dt
 from typing import Union, TYPE_CHECKING, Type, TypeVar, Generic, Dict, Any
 from xsentinels.null import Null, NullType, Nullable
-from xmodel.errors import XynModelError
+from xmodel.errors import XModelError
 from distutils.util import strtobool
 from decimal import Decimal
 
@@ -194,7 +194,7 @@ def convert_json_datetime(
         if isinstance(value, dt.date):
             return to_datetime(value)
 
-        raise XynModelError(
+        raise XModelError(
             f"Tried to convert a datetime from-json from an unknown value ({value})."
         )
 
@@ -207,7 +207,7 @@ def convert_json_datetime(
         value = to_datetime(value)
 
     if not isinstance(value, dt.datetime):
-        raise XynModelError(f"Tried to convert to json a none date/datetime value ({value}).")
+        raise XModelError(f"Tried to convert to json a none date/datetime value ({value}).")
 
     # Always use UTC format.
     return value.astimezone(as_time_zone).isoformat()
@@ -231,7 +231,7 @@ def convert_decimal(
 
     if direction not in (Direction.to_model, Direction.from_json):
         # We don't know the direction (new direct?)
-        raise XynModelError(
+        raise XModelError(
             f"Unknown direction ({direction}), can't convert value ({value}); "
             f"is this a new direction I need to handle?"
         )

@@ -1,5 +1,5 @@
 from xmodel.converters import Direction
-from xmodel.errors import XynModelError
+from xmodel.errors import XModelError
 from xsentinels.null import Null
 from typing import TYPE_CHECKING, TypeVar, Generic
 from xmodel.base.model import BaseModel
@@ -75,7 +75,7 @@ class PrivateApiState(Generic[M]):
         structure = api.structure
 
         if not structure.is_field_a_child(name, and_has_id=True):
-            raise XynModelError(
+            raise XModelError(
                 f"Called is_field_a_child('{name}') for model cls "
                 f"({structure.model_cls}), but field is not a child with a "
                 f"defined id."
@@ -96,7 +96,7 @@ class PrivateApiState(Generic[M]):
     def set_related_field_id(self, name, value):
         """
         Sets the `id` for the related field.  If the field is not a child object, or if the child
-        does not use an id field, then will raise an XynModelError.
+        does not use an id field, then will raise an XModelError.
 
         If a child is already set on field 'name' and:
             1. It's id == value you pass in, then nothing will change.
@@ -126,7 +126,7 @@ class PrivateApiState(Generic[M]):
         structure = api.structure
 
         if not structure.is_field_a_child(name, and_has_id=True):
-            raise XynModelError(
+            raise XModelError(
                 f"Called set_related_field_id('{name}') for ({self.model}), but field is not a "
                 f"child with a defined id."
             )

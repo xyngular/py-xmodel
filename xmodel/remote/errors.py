@@ -1,11 +1,11 @@
-from xmodel.errors import XynModelError
+from xmodel.errors import XModelError
 
 
-class XynRemoteError(XynModelError):
+class XRemoteError(XModelError):
     pass
 
 
-class XynRemoteMaintenanceError(XynRemoteError):
+class XynRemoteMaintenanceError(XRemoteError):
     """
     Standard exception that should be raised if during an API communication it's determined
     there is an error due to a maintenance window of some sort.

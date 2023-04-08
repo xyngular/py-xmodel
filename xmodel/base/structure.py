@@ -4,7 +4,7 @@ of a `xmodel.base.model.BaseModel.api`.
 """
 
 from xmodel.common.types import JsonDict
-from xmodel.errors import XynModelError
+from xmodel.errors import XModelError
 from xmodel.base.fields import Field
 from xsentinels.default import Default
 from typing import TypeVar, Optional, Dict, List, Type, Any, Generic
@@ -370,7 +370,7 @@ class BaseStructure(Generic[F]):
                 (not inspect.isclass(type_hint) or not issubclass(type_hint, BaseModel)) and
                 typing_inspect.get_origin(type_hint) not in (list, set)
             ):
-                raise XynModelError(
+                raise XModelError(
                     f"Unsupported type ({type_hint}) with field-name ({name}) "
                     f"for model-class ({model_cls}) in field-obj ({field_obj})."
                 )
@@ -380,7 +380,7 @@ class BaseStructure(Generic[F]):
                 field_obj.json_path != field_obj.name and
                 field_obj.related_type
             ):
-                XynModelError(
+                XModelError(
                     "Right now obj-relationships can't use the 'json_path' option "
                     "while at the same time being obj-relationships. Must use basic field "
                     "with api_path. "

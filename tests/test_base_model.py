@@ -3,7 +3,7 @@ from typing import List
 
 import pytest
 
-from xmodel import JsonModel, Field, XynModelError
+from xmodel import JsonModel, Field, XModelError
 from enum import Enum
 
 from xmodel.remote import RemoteModel
@@ -176,7 +176,7 @@ def test_related_field_id_type_conversion2():
 
     # Ensure related model field id is of correct type.
     jp = JParent({'embedded_id': Decimal("20")})
-    with pytest.raises(XynModelError):
+    with pytest.raises(XModelError):
         v = jp.api._api_state.get_related_field_id('embedded')
 
 

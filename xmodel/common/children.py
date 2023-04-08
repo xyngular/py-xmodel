@@ -10,7 +10,7 @@ from xsentinels.null import Null
 from xloop import xloop as loop
 
 from xmodel import BaseModel
-from xmodel.errors import XynModelError
+from xmodel.errors import XModelError
 from xmodel.base.fields import Field
 from xmodel import _private
 
@@ -66,7 +66,7 @@ def get_all_existent_child_objects(
         List[ModelChildRef]: A list of BaseApi Obj's that are child objects of the provided objs.
     """
     if isinstance(objs, types.GeneratorType):
-        raise XynModelError(
+        raise XModelError(
             "bulk_request_lazy_children was called with a generator type, it needs a list"
         )
 
@@ -148,7 +148,7 @@ def bulk_request_lazy_children(objs: Union[BaseModel, Sequence[BaseModel]]):
     """
 
     if isinstance(objs, types.GeneratorType):
-        raise XynModelError(
+        raise XModelError(
             "bulk_request_lazy_children was called with a generator type, it needs a list"
         )
 

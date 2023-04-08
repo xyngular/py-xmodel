@@ -13,7 +13,7 @@ from xloop import xloop as loop
 
 from xmodel.base.fields import Field, Converter
 from xmodel import _private
-from xmodel.errors import XynModelError
+from xmodel.errors import XModelError
 
 if TYPE_CHECKING:
     # Allows IDE to get type reference without a circular import issue.
@@ -220,8 +220,8 @@ class BaseModel(Generic[M], ABC):
             try:
                 all_type_hints = get_type_hints(cls)
             except (NameError, AttributeError) as e:
-                from xmodel import XynModelError
-                raise XynModelError(
+                from xmodel import XModelError
+                raise XModelError(
                     f"Unable to construct model subclass ({cls}) due to error resolving "
                     f"type-hints on model class. They must be visible at the module-level that "
                     f"the class is defined in. Original error: ({e})."
@@ -253,9 +253,9 @@ class BaseModel(Generic[M], ABC):
                     **kwargs
                 )
             except TypeError as e:
-                from xmodel import XynModelError
+                from xmodel import XModelError
                 # Adding some more information to the exception.
-                raise XynModelError(
+                raise XModelError(
                     f"Unable to configure model structure for ({cls}) due to error ({e}) "
                     f"while calling ({structure}.configure_for_model_type)."
                 )
@@ -325,7 +325,7 @@ class BaseModel(Generic[M], ABC):
         elif isinstance(first_arg, Mapping):
             api.update_from_json(first_arg)
         elif first_arg is not None:
-            raise XynModelError(
+            raise XModelError(
                 f"When a first argument to BaseModel.__init__ is provided, it needs to be a "
                 f"mapping/dict with the json values in it OR a BaseModel instance to copy from; "
                 f"I was given a type ({type(first_arg)}) with value ({first_arg}) instead."
@@ -333,7 +333,7 @@ class BaseModel(Generic[M], ABC):
 
         for k, v in initial_values.items():
             if not self.api.structure.get_field(k):
-                raise XynModelError(
+                raise XModelError(
                     f"While constructing {self}, init method got a value for an "
                     f"unknown field ({k})."
                 )
@@ -427,7 +427,7 @@ class BaseModel(Generic[M], ABC):
             elif value is Null:
                 # If type_hint supported the Null type, then it would have been dealt with in
                 # the previous if statement.
-                XynModelError(
+                XModelError(
                     f"Setting a Null value for field ({name}) when typehint ({type_hint}) "
                     f"does not support NullType, for object ({self})."
                 )
@@ -509,7 +509,7 @@ class BaseModel(Generic[M], ABC):
         if field.fset:
             field.fset(self, value)
         elif field.fget:
-            raise XynModelError(
+            raise XModelError(
                 f"We have a field ({field}) that does not have a Field.fset (setter function),"
                 f"but has a Field.fget ({field.fget}) and someone is attempting to set a "
                 f"value on the Model object ({self})... this is unsupported. "
@@ -619,7 +619,7 @@ def _get_default_value_from_field(model: BaseModel, field: Field = None) -> Any:
 
     if default is Null:
         if not field.nullable:
-            raise XynModelError(f"Default for field {field} is Null but field is not Nullable.")
+            raise XModelError(f"Default for field {field} is Null but field is not Nullable.")
         return Null
 
     if default is Default:
@@ -634,7 +634,7 @@ def _get_default_value_from_field(model: BaseModel, field: Field = None) -> Any:
     type_hint = field.type_hint
     if default_type is not type_hint and default_type is not typing_inspect.get_origin(type_hint):
         if not field.converter:
-            raise XynModelError(
+            raise XModelError(
                 f"Default for field ({field.name}) for model_type ({type(model)}) is of type "
                 f"({type(default)}), "
                 f"but fields type-hint is ({field.type_hint}) which is not the same; "

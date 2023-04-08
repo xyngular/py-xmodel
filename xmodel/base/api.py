@@ -129,7 +129,7 @@ from typing import (
 from xmodel.base.fields import Field, Converter
 from xmodel._private.api.state import PrivateApiState  # noqa - orm private module
 from logging import getLogger
-from xmodel.errors import XynModelError
+from xmodel.errors import XModelError
 from xsentinels.null import Null, NullType
 from typing import get_type_hints
 from xinject.context import XContext
@@ -367,7 +367,7 @@ class BaseApi(Generic[M]):
                 See above "BaseModel Instance Creation" for more details.
         """
         if api and model:
-            raise XynModelError(
+            raise XModelError(
                 f"You can't pass in an BaseApi {api} and BaseModel {model} simultaneously."
             )
 
@@ -493,7 +493,7 @@ class BaseApi(Generic[M]):
         model = self.model
 
         if not self.structure.is_field_a_child(child_field_name):
-            raise XynModelError(
+            raise XModelError(
                 f"Called get_child_without_lazy_lookup('{child_field_name}') but "
                 f"field ({child_field_name}) is NOT a child field on model ({model}).")
 
@@ -871,7 +871,7 @@ class BaseApi(Generic[M]):
         api_state = self._api_state
 
         if not isinstance(json, Mapping):
-            raise XynModelError(
+            raise XModelError(
                 f"update_from_json(...) was given a non-mapping parameter ({json})."
             )
 
@@ -984,7 +984,7 @@ class BaseApi(Generic[M]):
                 # child_api = child_type.api
                 # if not child_api and child_api.structure.has_id_field:
                 #     # TODO: add a non generic Exception for this
-                #     raise XynModelError(
+                #     raise XModelError(
                 #         f"{model} has an attribute with name ({f}) with type-hint List that "
                 #         f"doesn't contain an API BaseModel Type as the only argument"
                 #     )

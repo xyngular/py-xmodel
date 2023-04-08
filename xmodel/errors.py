@@ -1,3 +1,3 @@
-class XynModelError(Exception):
+class XModelError(Exception):
     """ Base-class for all xmodel exceptions. """
     pass

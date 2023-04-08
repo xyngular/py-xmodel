@@ -10,7 +10,7 @@ from abc import ABC, abstractmethod
 from xsentinels.default import Default
 import dataclasses
 from enum import Enum, auto as EnumAuto  # noqa
-from xmodel.errors import XynModelError
+from xmodel.errors import XModelError
 from copy import copy
 import typing_inspect
 import inspect
@@ -280,7 +280,7 @@ class Field:
 
         if parent_field:
             if not isinstance(self, type(parent_field)):
-                raise XynModelError(
+                raise XModelError(
                     f"Child field {self} must be same or subclass of parent ({parent_field})."
                 )
 
@@ -327,7 +327,7 @@ class Field:
             _self.include_with_fields = set(loop(self.include_with_fields))
 
         if self.include_with_fields and self.name != self.json_path:
-            raise XynModelError(
+            raise XModelError(
                 f"Can't have a Field with `name != json_path` "
                 f"('{self.name}' != '{self.json_path}')"
                 f"and that also uses include_with_fields "
@@ -539,7 +539,7 @@ class Field:
     #         self.fget = fget_func
     #         return self
     #
-    #     raise XynModelError(
+    #     raise XModelError(
     #         f"Attempt to calling a Field ({self}) as a callable function without "
     #         f"providing a function as the first parameter, "
     #         f"I got this parameter instead: ({func})... "

@@ -12,7 +12,7 @@ from xsentinels import Default
 from xurls.url import Query
 from xloop import xloop as loop
 
-from xmodel.errors import XynModelError
+from xmodel.errors import XModelError
 from xmodel.base.api import BaseApi
 from xmodel.remote.model import RemoteModel
 from xmodel.common.types import FieldNames, JsonDict
@@ -85,7 +85,7 @@ class RemoteApi(BaseApi[M]):
 
         client_type = get_type_hints(type(self)).get('client', None)
         if client_type is None:
-            raise XynModelError(
+            raise XModelError(
                 f"RemoteClient subclass type is undefined for model class ({self.model_type}), "
                 f"a type-hint for 'client' on BaseApi class must be in place for me to know what "
                 f"type to get."
@@ -274,7 +274,7 @@ class RemoteApi(BaseApi[M]):
         # Only deal with str/int types for the field-type for id/key-types.
         # If it's something else, lets not support that for now.
         if field_type not in (int, str):
-            raise XynModelError(
+            raise XModelError(
                 f"Field ({id_field}) for model type ({self.model_type}) needs to be a str or int "
                 f"in order to currently be used in `get_via_id` method at the moment."
             )
@@ -283,7 +283,7 @@ class RemoteApi(BaseApi[M]):
         result_is_list = False
 
         if typing_inspect.is_union_type(field_type):
-            raise XynModelError(
+            raise XModelError(
                 f"Field `{id_field}` for model type {self.model_type} can't be a union-type"
                 f"({field_type}), it needs to be a specific type like `int`, `str`, etc."
             )
@@ -620,7 +620,7 @@ class RemoteApi(BaseApi[M]):
         """
         model = self.model
         if model.id is None:
-            raise XynModelError(
+            raise XModelError(
                 f"A deleted was requested for an object that had no id for ({model})."
             )
 
