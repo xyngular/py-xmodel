@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/xyngular/py-xmodel/compare/v0.1.0...v0.1.1) (2023-04-08)
+
+
+### Bug Fixes
+
+* doc generator. ([f6f9e0c](https://github.com/xyngular/py-xmodel/commit/f6f9e0ce289faf4b59608de68d9da64fb14618bd))
+
 ## 0.1.0 (2023-04-08)
 
 
