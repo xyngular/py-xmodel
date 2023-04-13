@@ -9,7 +9,7 @@ license = "The Unlicense (Unlicense)"
 repository = "https://github.com/xyngular/py-xmodel"
 
 [tool.poetry.dependencies]
-python = "~3.8"
+python = "^3.8"
 typing-inspect = "^0"
 xloop = "^1.0.1"
 xinject = "^1.4.0"
