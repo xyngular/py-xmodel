@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.2.0](https://github.com/xyngular/py-xmodel/compare/v0.1.1...v0.2.0) (2023-04-13)
+
+
+### Features
+
+* allow later versions of python. ([5e93b10](https://github.com/xyngular/py-xmodel/commit/5e93b1036df794b2333ef8b0bc50bfa49188e023))
+
+## [0.1.1](https://github.com/xyngular/py-xmodel/compare/v0.1.0...v0.1.1) (2023-04-08)
+
+
+### Bug Fixes
+
+* doc generator. ([f6f9e0c](https://github.com/xyngular/py-xmodel/commit/f6f9e0ce289faf4b59608de68d9da64fb14618bd))
+
 ## 0.1.0 (2023-04-08)
 
 
