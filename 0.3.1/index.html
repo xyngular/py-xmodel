@@ -1,0 +1,724 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+        <link rel="next" href="changelog/">
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.6">
+    
+    
+      
+        <title>Getting Started - Docs for xmodel</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ded33207.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#getting-started" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="Docs for xmodel" class="md-header__button md-logo" aria-label="Docs for xmodel" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Docs for xmodel
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Getting Started
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+            </label>
+          
+        
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="Docs for xmodel" class="md-nav__button md-logo" aria-label="Docs for xmodel" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Docs for xmodel
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index md-nav__link--active">
+          <a href=".">xmodel</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          xmodel
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/xmodel/" target="_blank" class="md-nav__link">
+        API Reference
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    Getting Started
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-in-python-project" class="md-nav__link">
+    Install in Python project
+  </a>
+  
+    <nav class="md-nav" aria-label="Install in Python project">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#poetry" class="md-nav__link">
+    Poetry
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development" class="md-nav__link">
+    Development
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use" class="md-nav__link">
+    How To Use
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sub-models" class="md-nav__link">
+    Sub-Models
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remote-abstract-interface" class="md-nav__link">
+    Remote Abstract Interface
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>Getting Started</h1>
+
+<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
+<details class="warning" open="open">
+<summary>Alpha Software!</summary>
+<p>This is pre-release Alpha software, based on another code base and
+the needed changes to make a final release version are not yet
+completed. Everything is subject to change!</p>
+</details>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>poetry<span class="w"> </span>install<span class="w"> </span>xmodel
+</code></pre></div></td></tr></table></div>
+<p>or</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>xmodel
+</code></pre></div></td></tr></table></div>
+<p>Very basic example:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">from</span> <span class="nn">xmodel</span> <span class="kn">import</span> <span class="n">JsonModel</span>
+
+<span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">JsonModel</span><span class="p">):</span>
+    <span class="n">some_attr</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="n">json_dict_input</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;some_attr&#39;</span><span class="p">:</span> <span class="s1">&#39;a-value&#39;</span><span class="p">}</span>    
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">MyModel</span><span class="p">(</span><span class="n">json_dict_input</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">some_attr</span> <span class="o">==</span> <span class="s1">&#39;a-value&#39;</span>
+
+<span class="n">json_dict</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="k">assert</span> <span class="n">json_dict</span> <span class="o">==</span> <span class="n">json_dict_input</span>
+</code></pre></div></td></tr></table></div>
+<p>Also, an abstract RemoteModel interface used in xmodel-rest and xmodel-dynamo along with
+some common code.</p>
+<ul>
+<li><a href="#install-in-python-project">Install in Python project</a></li>
+<li><a href="#poetry">Poetry</a><ul>
+<li><a href="#gemfury">Gemfury</a></li>
+<li><a href="#git-url">Git URL</a></li>
+</ul>
+</li>
+<li><a href="#development">Development</a></li>
+<li><a href="#how-to-use">How To Use</a></li>
+</ul>
+<h2 id="install-in-python-project">Install in Python project<a class="headerlink" href="#install-in-python-project" title="Permanent link">&para;</a></h2>
+<p>This can be installed from git URLs or from gemfury in the <code>pyproject.toml</code> file.</p>
+<p>You see the documentation locally by doing this in the project root folder with <code>repoman</code> installed 
+locally:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code>repo<span class="w"> </span>install
+repo<span class="w"> </span>docs<span class="w"> </span>--live
+</code></pre></div></td></tr></table></div>
+<h3 id="poetry">Poetry<a class="headerlink" href="#poetry" title="Permanent link">&para;</a></h3>
+<p>You can install this using gemfury</p>
+<h2 id="development">Development<a class="headerlink" href="#development" title="Permanent link">&para;</a></h2>
+<p>How to develop this library. </p>
+<p><strong><em>Requires <code>repoman</code> to be installed locally</em></strong></p>
+<ul>
+<li>Install dependencies for development with <code>repo install</code></li>
+<li>Run tests with <code>repo test</code></li>
+<li>See documentation with <code>repo docs --live</code> (see <code>repo docs --help</code> on how to configure locally)</li>
+</ul>
+<h2 id="how-to-use">How To Use<a class="headerlink" href="#how-to-use" title="Permanent link">&para;</a></h2>
+<p>.. todo::  This is incomplete, need to put more in here, especially about the remote model.
+    Also, the docs for some classes in this library are a bit out of date (very alpha software).</p>
+<p>The basic use-case of this library is with <code>JsonModel</code>, which allows you to map an object
+to/from a json dict with various options to control how it maps, converting values to
+pyhton native types.</p>
+<p>It can also keep track of changes you make to the model object compared to the Json values it
+has gotten.</p>
+<p>Here is a basic overview of working with a JsonModel subclass, as a series of code-examples
+that build on-top of each-other with a number of code comments to explain what's happening:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">from</span> <span class="nn">xmodel</span> <span class="kn">import</span> <span class="n">JsonModel</span>
+<span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+
+<span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">JsonModel</span><span class="p">):</span>
+    <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">volume</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">price</span><span class="p">:</span> <span class="n">Decimal</span>
+
+<span class="n">json</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Darius&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;volume&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="s1">&#39;10.4&#39;</span>
+<span class="p">}</span>
+
+<span class="c1"># First positional argument for a JsonModel is an optional Json Dict.</span>
+<span class="c1"># It turns around and simply calls `self.api.update_from_json` for you</span>
+<span class="c1"># with the dict you pass in.</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">MyModel</span><span class="p">(</span><span class="n">json</span><span class="p">)</span>
+
+<span class="c1"># After updating model from json, the values are all set.</span>
+<span class="k">assert</span> <span class="n">model</span><span class="o">.</span><span class="n">first_name</span> <span class="o">==</span> <span class="s1">&#39;Darius&#39;</span>
+<span class="k">assert</span> <span class="n">model</span><span class="o">.</span><span class="n">volume</span> <span class="o">==</span> <span class="mi">20</span>
+<span class="k">assert</span> <span class="n">model</span><span class="o">.</span><span class="n">price</span> <span class="o">==</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;10.4&#39;</span><span class="p">)</span>
+
+<span class="c1"># JsonModel&#39;s keep track of the orginal JSON values, it compares the values</span>
+<span class="c1"># to what the values are in it&#39;s attributes and can return what actaully changed.</span>
+<span class="c1"># If nothing has changed, it returns a None.</span>
+<span class="c1">#</span>
+<span class="c1"># Returns None because no changes vs the inital JSON were made.</span>
+<span class="k">assert</span> <span class="n">model</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="n">only_include_changes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+
+<span class="c1"># Converts to Decimal(30) for you when you set it on object.</span>
+<span class="n">model</span><span class="o">.</span><span class="n">price</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="k">assert</span> <span class="n">model</span><span class="o">.</span><span class="n">price</span> <span class="o">==</span> <span class="n">Decimal</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+
+<span class="c1"># Now when you ask it for changes, it includes the change:</span>
+<span class="k">assert</span> <span class="n">model</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="n">only_include_changes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="s1">&#39;30&#39;</span><span class="p">}</span>
+
+<span class="c1"># Update values with a partial JSON object, it only updates what&#39;s inside json dict,</span>
+<span class="c1"># leaves other values alone.</span>
+<span class="n">model</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">update_from_json</span><span class="p">({</span><span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">&#39;new-name&#39;</span><span class="p">})</span>
+
+<span class="k">assert</span> <span class="n">model</span><span class="o">.</span><span class="n">first_name</span> <span class="o">==</span> <span class="s1">&#39;new-name&#39;</span>
+
+<span class="c1"># We still have that price change because we have not updated it with the new json-value yet.</span>
+<span class="k">assert</span> <span class="n">model</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="n">only_include_changes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span> <span class="o">==</span> <span class="p">{</span><span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="s1">&#39;30&#39;</span><span class="p">}</span>
+
+<span class="c1"># It&#39;s pretty common when you send values to an API, the server will return what the current</span>
+<span class="c1"># values are for the object. You can just pipe that into `update_from_json` to update the</span>
+<span class="c1"># object from it&#39;s JSON values.</span>
+<span class="c1">#</span>
+<span class="c1"># This also records the orginal json-value, per-key, to compare against for</span>
+<span class="c1"># the `only_include_changes` option.</span>
+<span class="n">model</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">update_from_json</span><span class="p">({</span><span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">&#39;new-name&#39;</span><span class="p">})</span>
+
+
+<span class="c1"># Returns None because no changes vs what it has recoded as the original JSON values:</span>
+<span class="k">assert</span> <span class="n">model</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="n">only_include_changes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="sub-models">Sub-Models<a class="headerlink" href="#sub-models" title="Permanent link">&para;</a></h2>
+<p>You can type-hint to another JsonModel, if you do it will embed the object when you ask
+for the objects JSON.</p>
+<p>It can also update it's self and the embedded-JsonModel object for you when you update it
+from a Json dict.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">from</span> <span class="nn">xmodel</span> <span class="kn">import</span> <span class="n">JsonModel</span>
+<span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+
+<span class="k">class</span> <span class="nc">Address</span><span class="p">(</span><span class="n">JsonModel</span><span class="p">[</span><span class="s1">&#39;Address&#39;</span><span class="p">]):</span>
+    <span class="n">street</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">city</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="k">class</span> <span class="nc">Account</span><span class="p">(</span><span class="n">JsonModel</span><span class="p">[</span><span class="s1">&#39;Account]&#39;</span><span class="p">]):</span>
+    <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">address</span><span class="p">:</span> <span class="n">Address</span>
+
+<span class="n">json</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">&#39;customer-name&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;street&#39;</span><span class="p">:</span> <span class="s1">&#39;123 Frost Ave&#39;</span><span class="p">,</span> <span class="n">city</span><span class="p">:</span> <span class="s1">&#39;Lehi&#39;</span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">account</span> <span class="o">=</span> <span class="n">Account</span><span class="p">(</span><span class="n">json</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="n">account</span><span class="o">.</span><span class="n">address</span><span class="o">.</span><span class="n">street</span> <span class="o">==</span> <span class="s1">&#39;123 Frost Ave&#39;</span>
+
+<span class="c1"># If you ask for json, should return same values it was given</span>
+<span class="k">assert</span> <span class="n">account</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">json</span><span class="p">()</span> <span class="o">==</span> <span class="n">json</span>
+
+<span class="c1"># No changes vs orginal values, so returns None</span>
+<span class="k">assert</span> <span class="n">account</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="n">only_include_changes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+
+<span class="c1"># We make a change to sub-object</span>
+<span class="n">account</span><span class="o">.</span><span class="n">address</span><span class="o">.</span><span class="n">street</span> <span class="o">=</span> <span class="s1">&#39;changed-street&#39;</span>
+
+<span class="c1"># Now when we ask for changes, it includes on the sub-object change.</span>
+<span class="k">assert</span> <span class="n">account</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="n">only_include_changes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;street&#39;</span><span class="p">:</span> <span class="s1">&#39;changed-street&#39;</span><span class="p">}}</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="remote-abstract-interface">Remote Abstract Interface<a class="headerlink" href="#remote-abstract-interface" title="Permanent link">&para;</a></h2>
+<p>I'll briefly mention the <code>xmodel.remote</code> module and the <code>RemoteModel</code></p>
+<p>It contains a set of common code and an abstract interface that can be used to implment
+remote retreival and sending of JsonModel-type objects.</p>
+<p>We have two current concreate implementations:</p>
+<ul>
+<li>xmodel-rest: Useful for rest-api's</li>
+<li>xmodel-dynamo: Useful for model objects in dynamo tables.</li>
+</ul>
+<p>The abstract interface includes a basic way to ask for an object by id,
+and a way to send object updates back to API.</p>
+<p>This makes it so JsonModel knows how lazily retrieve <code>RemoteModel</code>'s if it encounters one
+as a sub-object on it's self.
+It simply calls the correct abstract method, which should be a concreate implementation
+of the RemoteModel and related classes, abstract interfaces.</p>
+<p>I won't say much more about it here.
+See relevant classes/modules doc-comments for more details.
+You can also look at xmodel-rest and xmodel-dynamo for concreate,
+real-world implementations.</p>
+
+  <hr>
+<div class="md-source-file">
+  <small>
+    
+      Last update:
+      2023-04-15
+    
+  </small>
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.tracking", "content.code.annotate"], "search": "assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.51198bba.min.js"></script>
+      
+    
+  </body>
+</html>
