@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.1](https://github.com/xyngular/py-xmodel/compare/v0.3.0...v0.3.1) (2023-04-15)
+
+
+### Bug Fixes
+
+* license ([c1fea47](https://github.com/xyngular/py-xmodel/commit/c1fea478660e5d8e88a7c446640db44fe8942615))
+
+
+### Documentation
+
+* add doc links. ([2beff5c](https://github.com/xyngular/py-xmodel/commit/2beff5c7a2cdf2cf3d133edaf9b6bc32ba7e3e7d))
+
 ## [0.3.0](https://github.com/xyngular/py-xmodel/compare/v0.2.0...v0.3.0) (2023-04-15)
 
 
