@@ -9,7 +9,7 @@ from xmodel.common.types import JsonDict
 
 from xsentinels.null import Null, NullType
 from xsentinels.default import Default
-from xloop import xloop as loop
+from xmodel.util import loop
 
 from xmodel.base.fields import Field, Converter
 from xmodel import _private
