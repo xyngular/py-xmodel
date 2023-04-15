@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from xinject.context import XContext
 from xsentinels.default import Default
 from xsentinels.null import Null
-from xloop import xloop as loop
+from xmodel.util import loop
 
 from xmodel import BaseModel
 from xmodel.errors import XModelError

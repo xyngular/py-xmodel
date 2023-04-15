@@ -14,7 +14,7 @@ from xmodel.errors import XModelError
 from copy import copy
 import typing_inspect
 import inspect
-from xloop import xloop as loop
+from xmodel.util import loop
 
 if TYPE_CHECKING:
     from xmodel import BaseModel

@@ -10,7 +10,7 @@ import typing_inspect
 from xinject import Dependency
 from xsentinels import Default
 from xurls.url import Query
-from xloop import xloop as loop
+from xmodel.util import loop
 
 from xmodel.errors import XModelError
 from xmodel.base.api import BaseApi
