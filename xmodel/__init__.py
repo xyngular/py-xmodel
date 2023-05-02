@@ -1,14 +1,14 @@
 """
 Provides easy way to map dict to/from Full-Fledged 'JsonModel' object.
 
-Also, an abstract RemoteModel interface used in xmodel-rest and xmodel-dynamo along with
+Also, an abstract RemoteModel interface used in xmodel-rest and xdynamo along with
 some common code.
 
 .. important:: Doc-comments in varius classes have out-of-date/broken refs; will be fixed soon.
 
 
 .. important:: Docs Below Are OUT OF DATE!!!
-    Most of the docs below belong int xmodel-rest and xmodel-dynamo.
+    Most of the docs below belong int xmodel-rest and xdynamo.
     We will revamp them soon, and put more into the README.md as well.
     Currently, I would look at the docs above or README.md for info on how to use
     `JsonModel` class, which is the main-class of this library.
@@ -75,8 +75,7 @@ being the `base_url` which is one of elements that construct's the url/path to i
 >>> import datetime as dt
 >>>
 >>> class MyModel(
-...    BaseModel['MyModel'],  # <-- Need to put class name as type-var value
-...                           #     (use str to forward ref)
+...    BaseModel,
 ...    base_url="accounts"  # <-- Class argument passed to underlying Structure object.
 ... ):
 ...    my_attribute: str  # <-- Automatically maps to API without extra effort

@@ -39,7 +39,7 @@ class RemoteApi(BaseApi[M]):
 
     # This type-hint is only for IDE, `RemoteApi` does not use it
     # (self.model_type value is passed in when RemoteApi is allocated, in __init__ method).
-    model: RemoteModel[M]
+    model: M
 
     @property
     def _client(self):
@@ -64,8 +64,7 @@ class RemoteApi(BaseApi[M]):
 
                 >>> from xmodel.remote.model import RemoteModel
                 >>>
-                >>> # The ["MyModel"] part allows IDE to do better code-completion.
-                >>> class MyModel(RemoteModel["MyModel"]):
+                >>> class MyModel(RemoteModel):
                 >>>     api: MyApi
 
             When you get MyModel's api like below, it will return a MyApi instance,

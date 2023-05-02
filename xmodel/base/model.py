@@ -1,3 +1,6 @@
+import sys
+import typing
+
 from xmodel.common.lazy import LazyClassAttr  # noqa - orm private module
 from logging import getLogger
 from typing import get_type_hints, TYPE_CHECKING, TypeVar, Generic, Type, Optional, Any, Mapping, \
@@ -22,6 +25,7 @@ if TYPE_CHECKING:
     # Just for type-completion of abstract interface,
     # for when we look up a remote sub-model.
     from xmodel.remote import RemoteModel
+    # from typing import Self
 
 log = getLogger(__name__)
 
@@ -40,7 +44,35 @@ __pdoc__ = {
 }
 
 
-class BaseModel(Generic[M], ABC):
+try:
+    # If we are using Python 3.11, can use this new `Self` type that means current class/subclass
+    # that is being used.
+    # (it does appear that PyCharm >=2022.3 knows what `Self` is even if you use python < 3.11)
+    # This is the only way I know to have a class-property/attribute that type-hints as the
+    # subclass.
+    from typing import Self
+
+    # Attempt to use `dataclass_transform` on the `BaseModel` below.
+    #
+    # It happens to be that `Self` and `dataclass_transform` are both available in Python 3.11,
+    # so the import-above is a good enough 'check' to prevent this from executing on Python < 3.11.
+    model_auto_init = typing.dataclass_transform
+except ImportError:
+    # In regard to `Self`:
+    #   In this case, we will set `Self` to `BaseModel` after the `BaseModel` class is defined.
+    #   We need to have something defined for `Self` for Python < 3.11, since BaseModel and
+    #   its subclasses have their type-hints resolved at runtime
+    #   (also, `Self` is imported into modules that subclass `BaseModel` and redefine type-hint
+    #    for `BaseModel.api`).
+
+    # This here to support Python < 3.11 (ie: a decorator that does nothing).
+    globals()['model_auto_init'] = lambda: lambda x: x
+
+
+# Keeping the 'Generic[M]' part below temporarily for backwards compatibility;
+# it's not needed anymore otherwise.
+@model_auto_init()  # noqa - This will be defined.
+class BaseModel(ABC):
     """
     Used as the abstract base-class for classes/object that communicate with our REST API.
 
@@ -106,12 +138,13 @@ class BaseModel(Generic[M], ABC):
     # -------------------------------------
     # --------- Public Properties ---------
 
-    api: "BaseApi[M]" = None
+    api: "BaseApi[Self]" = None
     """ Used to access the api class, which is used to retrieve/send objects to/from api.
 
         You can specify this as a type-hint in subclasses to change the class we use for this
         automatically, like so::
             from xmodel import BaseModel, BaseApi
+            from xmodel.base.model import Self
             from typing import TypeVar
 
             M = TypeVar("M")
@@ -119,8 +152,12 @@ class BaseModel(Generic[M], ABC):
             class MyCoolApi(BaseApi[M]):
                 pass
 
-            class MyCoolModel(BaseModel["MyCoolModel"]):
-                api: MyCoolApi[M]  # If this model will have subclasses, you want to use a type-var
+            class MyCoolModel(BaseModel):
+                # The `Self` here is imported from xmodel
+                # (to maintain backwards compatability with Python < 3.11)
+                # It allows us to communicate our subclass-type to the `api` object,
+                # allowing IDE to type-complete/hint better.
+                api: MyCoolApi[Self] 
 
         The generic ``T`` type-var in this case refers to whatever model class that your using.
         In the example just above, ``T`` would be referring to ``MyCoolModel`` if you did this
@@ -161,7 +198,7 @@ class BaseModel(Generic[M], ABC):
         `xmodel.base.structure.BaseStructure` subclass. You can configure your BaseModel to use
         this BaseStructure subclass via a type-hint on `xmodel.base.api.BaseApi.structure`.
 
-        See `xmodel_dynamo.dynamo.DynStructure.configure_for_model_type` for a complete example of a
+        See `xdynamo.dynamo.DynStructure.configure_for_model_type` for a complete example of a
         custom BaseStructure subclass that adds extra class arguments that are specific to Dynamo.
 
         Args:
@@ -609,6 +646,21 @@ class BaseModel(Generic[M], ABC):
             which is useful when traversing relationships.
         """
         return id(self)
+
+
+if 'Self' not in globals():
+    # I need to have this set to something because `BaseModel` and it's subclasses get their
+    # typehints resolved at run-time (to implement the needed dynamic behavior).
+    #
+    # This is the best we can do for a `Self` class-property when using python version < 3.11
+    # without resorting to self-referential Generics (which are annoying, since you need to
+    # define them at every model-leaf endpoint);
+    #
+    # Newer PyCharm >=2022.3 will see the above Self typing import and still work even if local project
+    # is using an older version of Python!.
+    #
+    # Using `globals` here to hide this typing-info from PyCharm (and other IDEs).
+    globals()['Self'] = BaseModel
 
 
 def _get_default_value_from_field(model: BaseModel, field: Field = None) -> Any:

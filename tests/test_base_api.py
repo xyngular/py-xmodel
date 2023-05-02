@@ -25,15 +25,15 @@ class MySecondApi(MyFirstApi[M]):
     }
 
 
-class CommonModel(BaseModel[M]):
+class CommonModel(BaseModel):
     api: MyFirstApi
 
 
-class MyFirstModel(CommonModel['MyFirstModel']):
+class MyFirstModel(CommonModel):
     pass
 
 
-class MySecondModel(CommonModel['MySecondModel']):
+class MySecondModel(CommonModel):
     api: MySecondApi
 
 

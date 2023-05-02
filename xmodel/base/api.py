@@ -103,7 +103,7 @@ Here is an example of how to customize/define/configure each part of the system:
 ...     settings: MySettings
 ...     structure: MyStructure[Field]
 >>>
->>> class MyModel(xmodel.BaseModel['MyModel']):
+>>> class MyModel(xmodel.BaseModel):
 ...     # Same as in MyApi, this will inherit from superclass if not specified.
 ...     api: MyApi
 
@@ -423,7 +423,7 @@ class BaseApi(Generic[M]):
     # --------- Things REQUIRING an Associated BaseModel -----
 
     @property
-    def model(self) -> BaseModel[M]:
+    def model(self) -> M:
         """ REQUIRES associated model object [see doc text below].
 
         Gives you back the model associated with this api. If this BaseApi obj is associated
@@ -474,7 +474,7 @@ class BaseApi(Generic[M]):
             child_field_name,
             *,
             false_if_not_set=False,
-    ) -> Union[BaseModel[M], None, bool, NullType]:
+    ) -> Union[M, None, bool, NullType]:
         """ REQUIRES associated model object [see self.model].
 
         If the child is current set to Null, or an object, returns that value.
@@ -633,7 +633,7 @@ class BaseApi(Generic[M]):
                 # Method below should deal with None vs Null.
                 set_value_into_json_dict(child_obj_id, f"{f}_id")
             else:
-                obj: 'BaseModel[M]' = getattr(model, f)
+                obj: 'M' = getattr(model, f)
 
                 # Related-object has no 'id', so get it's json dict and set that into the output.
                 v = obj
@@ -799,7 +799,7 @@ class BaseApi(Generic[M]):
         # If I was really cool :)... I would find out the inner type in case of int/str
         # and to a conversion to compare Apples to Apples.....
         # But trying to minimize changes so I don't conflict as much with soon to be
-        # xmodel-dynamo feature.
+        # xdynamo feature.
         if type(new_value) is set and type(old_value) is list:
             old_value = set(old_value)
 
@@ -968,7 +968,7 @@ class BaseApi(Generic[M]):
                     "other BaseModel objects and automatically handle that in some way."
                 )
 
-                # child_type: 'Type[BaseModel[M]]'
+                # child_type: 'Type[M]'
                 # child_type = typing_inspect.get_args(obj_type)
                 # # __args__ returns a tuple of all arguments passed into List[] so we need to
                 # # pull the class out of the tuple

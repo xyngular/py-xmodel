@@ -28,14 +28,14 @@ class TApi(RemoteApi[M]):
     client: TClient
 
 
-class RChild(RemoteModel['JModel']):
+class RChild(RemoteModel):
     # Use out TApi type for this object, which in turn will use our custom TClient
     api: TApi['RChild']
 
     id: int
 
 
-class JParent(JsonModel['JParent']):
+class JParent(JsonModel):
     embedded: RChild
 
 

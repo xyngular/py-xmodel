@@ -16,5 +16,5 @@ from .base import BaseModel
 M = TypeVar('M')
 
 
-class JsonModel(BaseModel[M]):
+class JsonModel(BaseModel):
     pass

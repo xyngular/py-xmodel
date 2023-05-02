@@ -38,7 +38,7 @@ assert json_dict == json_dict_input
 
 
 
-Also, an abstract RemoteModel interface used in xmodel-rest and xmodel-dynamo along with
+Also, an abstract RemoteModel interface used in xmodel-rest and xdynamo along with
 some common code.
 
 
@@ -165,11 +165,11 @@ from a Json dict.
 from xmodel import JsonModel
 from decimal import Decimal
 
-class Address(JsonModel['Address']):
+class Address(JsonModel):
     street: str
     city: str
 
-class Account(JsonModel['Account]']):
+class Account(JsonModel):
     first_name: str
     address: Address
 
@@ -206,7 +206,7 @@ remote retreival and sending of JsonModel-type objects.
 We have two current concreate implementations:
 
 - xmodel-rest: Useful for rest-api's
-- xmodel-dynamo: Useful for model objects in dynamo tables.
+- xdynamo: Useful for model objects in dynamo tables.
 
 The abstract interface includes a basic way to ask for an object by id,
 and a way to send object updates back to API.
@@ -218,6 +218,6 @@ of the RemoteModel and related classes, abstract interfaces.
 
 I won't say much more about it here.
 See relevant classes/modules doc-comments for more details.
-You can also look at xmodel-rest and xmodel-dynamo for concreate,
+You can also look at xmodel-rest and xdynamo for concreate,
 real-world implementations.
 
