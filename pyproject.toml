@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "xmodel"
-version = "0.3.1"
+version = "0.4.0"
 description = "Models for working with JSON, ie: JsonModel"
 authors = ["Josh Orr <josh@orr.blue>"]
 packages = [{include = "xmodel"}]
