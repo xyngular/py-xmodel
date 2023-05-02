@@ -2,7 +2,7 @@ from xsentinels.null import Nullable
 from xmodel import BaseModel
 
 
-class MyModel(BaseModel['MyModel']):
+class MyModel(BaseModel):
     nullable_field: Nullable[str]
     non_nullable: int
 

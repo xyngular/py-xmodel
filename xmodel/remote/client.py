@@ -168,14 +168,14 @@ class RemoteClient(Generic[M]):
     # ------------------------------------------------
     # --------- Send Requests to API Methods ---------
 
-    def delete_obj(self, obj: RemoteModel[M]):
+    def delete_obj(self, obj: M):
         raise NotImplementedError(f"Implement `delete_obj()` on ({type(self)}).")
 
-    def delete_objs(self, objs: Sequence[RemoteModel[M]]):
+    def delete_objs(self, objs: Sequence[M]):
         raise NotImplementedError(f"Implement `delete_objs()` on ({type(self)}).")
 
     def send_objs(
-            self, objs: Sequence[RemoteModel[M]], *, url: URLStr = None, send_limit: int = None
+            self, objs: Sequence[M], *, url: URLStr = None, send_limit: int = None
     ):
         raise NotImplementedError(f"Implement `send_objs()` on ({type(self)}).")
 

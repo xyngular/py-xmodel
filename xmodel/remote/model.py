@@ -1,7 +1,8 @@
 from typing import TypeVar, Generic, TYPE_CHECKING
 
-from xmodel.base.model import BaseModel
+from xmodel.base.model import BaseModel, Self
 from xsentinels.default import Default
+
 
 if TYPE_CHECKING:
     from xmodel.remote.api import RemoteApi
@@ -29,8 +30,8 @@ def _lazy_load_types(cls):
         globals()['RemoteApi'] = RemoteApi
 
 
-class RemoteModel(BaseModel[M], lazy_loader=_lazy_load_types):
-    api: 'RemoteApi[M]' = None
+class RemoteModel(BaseModel, lazy_loader=_lazy_load_types):
+    api: 'RemoteApi[Self]' = None
 
     # todo: I think we will want to make the type on the `id` field a TypeVar of some sort,
     #       sometimes we will want to use a `str` for it's type [etc].

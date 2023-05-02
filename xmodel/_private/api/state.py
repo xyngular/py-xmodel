@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, TypeVar, Generic
 from xmodel.base.model import BaseModel
 from xmodel.common.types import JsonDict
 
-M = TypeVar("M")
+M = TypeVar("M", bound=BaseModel)
 
 # noinspection PyUnreachableCode
 if TYPE_CHECKING:
@@ -20,14 +20,14 @@ class PrivateApiState(Generic[M]):
         instance.
     """
 
-    def __init__(self, model: BaseModel[M]):
+    def __init__(self, model: BaseModel):
         self.model = model
         self.related_field_id_area = {}
 
     # ------------------------------------------------------
     # --------- These Can Vary BaseModel per-instance! ---------
 
-    model: BaseModel[M]
+    model: M
     """ Instance of model [or None if this state is directly associated with a BaseModel Class
         and not any particular instance.
     """

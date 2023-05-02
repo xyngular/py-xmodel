@@ -14,7 +14,7 @@ class MyEnum(Enum):
     SECOND_VALUE = 'second-value-2'
 
 
-class MyJModel(JsonModel['MyModel']):
+class MyJModel(JsonModel):
     _a_field_storage = None
     _b_field_storage = None
 
@@ -92,11 +92,11 @@ def test_include_with_fields_option():
 
 
 def test_changes_only_embedded_object():
-    class JModel(JsonModel['JModel']):
+    class JModel(JsonModel):
         field_str: str
         field_int: int
 
-    class JParent(JsonModel['JParent']):
+    class JParent(JsonModel):
         p_field_int: int
         embedded: JModel
 
@@ -121,7 +121,7 @@ def test_changes_only_embedded_object():
 
 
 def test_default_value_called_if_callable_as_needed():
-    class JModel(JsonModel['JModel']):
+    class JModel(JsonModel):
         field_str: str = 2
         field_list: List[str] = list
 
@@ -137,10 +137,10 @@ def test_default_value_called_if_callable_as_needed():
 
 
 def test_related_field_id_type_conversion():
-    class RModel(RemoteModel['JModel']):
+    class RModel(RemoteModel):
         id: int
 
-    class JParent(JsonModel['JParent']):
+    class JParent(JsonModel):
         embedded: RModel
 
     # Ensure related model field id is of correct type.
@@ -151,10 +151,10 @@ def test_related_field_id_type_conversion():
 
 
 def test_related_field_id_type_conversion_str():
-    class RModel(RemoteModel['JModel']):
+    class RModel(RemoteModel):
         id: str
 
-    class JParent(JsonModel['JParent']):
+    class JParent(JsonModel):
         embedded: RModel
 
     # Ensure related model field id is of correct type.
@@ -168,10 +168,10 @@ def test_related_field_id_type_conversion_str():
 
 
 def test_related_field_id_type_conversion2():
-    class JModel(JsonModel['JModel']):
+    class JModel(JsonModel):
         id: int
 
-    class JParent(JsonModel['JParent']):
+    class JParent(JsonModel):
         embedded: JModel
 
     # Ensure related model field id is of correct type.
@@ -181,7 +181,7 @@ def test_related_field_id_type_conversion2():
 
 
 def test_empty_json_dict_to_create_model():
-    class JModel(JsonModel['JModel']):
+    class JModel(JsonModel):
         a_field: str = "default-value"
     obj = JModel({})
     assert obj.a_field == "default-value"
