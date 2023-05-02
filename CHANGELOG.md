@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/xyngular/py-xmodel/compare/v0.3.1...v0.4.0) (2023-05-02)
+
+
+### Features
+
+* support `Self` and `dataclass-transforms` from Python 3.11 (python &lt; 3.11 still works). ([f9dd9ef](https://github.com/xyngular/py-xmodel/commit/f9dd9ef29e8baa725a152931acb4008695245165))
+
 ## [0.3.1](https://github.com/xyngular/py-xmodel/compare/v0.3.0...v0.3.1) (2023-04-15)
 
 
