@@ -380,6 +380,7 @@ class BaseApi(Generic[M]):
         if model:
             # If we have a model, the structure should be exactly the same as it's BaseModel type.
             self._structure = api.structure
+            self.default_converters = api.default_converters
             self._api_state = PrivateApiState(model=model)
             return
 
