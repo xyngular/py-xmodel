@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/xyngular/py-xmodel/compare/v0.4.0...v0.4.1) (2023-05-04)
+
+
+### Bug Fixes
+
+* Ensure model/instance-ties BaseApi has default-converters from Class-tied BaseApi object. ([d77aecd](https://github.com/xyngular/py-xmodel/commit/d77aecd21e684e0a68ae96127e444ea3c1158100))
+
 ## [0.4.0](https://github.com/xyngular/py-xmodel/compare/v0.3.1...v0.4.0) (2023-05-02)
 
 
