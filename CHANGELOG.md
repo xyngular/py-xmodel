@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/xyngular/py-xmodel/compare/v0.4.1...v0.5.0) (2023-05-05)
+
+
+### Features
+
+* lazily copy any default-BaseModel instance when needed. ([f26bfd0](https://github.com/xyngular/py-xmodel/commit/f26bfd0f17ab103b9889199deffb341be8a5ee72))
+
 ## [0.4.1](https://github.com/xyngular/py-xmodel/compare/v0.4.0...v0.4.1) (2023-05-04)
 
 
