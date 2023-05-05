@@ -358,6 +358,7 @@ class BaseModel(ABC):
         first_arg = args[0] if args_len > 0 else None
 
         if isinstance(first_arg, BaseModel):
+            # todo: Probably make this recursive, in that we copy sub-base-models as well???
             api.copy_from_model(first_arg)
         elif isinstance(first_arg, Mapping):
             api.update_from_json(first_arg)
@@ -681,6 +682,22 @@ def _get_default_value_from_field(model: BaseModel, field: Field = None) -> Any:
     # It could be a list or a dict type or a generator function of some sort.
     if callable(default):
         default = default()
+    elif not inspect.isclass(default) and isinstance(default, BaseModel):
+        # We should make a copy of the object, as using the same instance 'default' across multiple
+        # instances is almost certainly not what the user wants.
+        # if the user truly wants to share the same exact default BaseModel instance across multiple
+        # other BaseModel attributes, they can wrap it in a lambda/method, like this:
+        #
+        # class M1(BaseModel):
+        #     pass
+        #
+        # shared_default = M1()
+        #
+        # class M2(BaseModel):
+        #     m1: M1 = lambda: shared_default
+
+        # Make a copy via sending object to BaseModel init-method.
+        default = type(default)(default)
 
     default_type = type(default)
     type_hint = field.type_hint
