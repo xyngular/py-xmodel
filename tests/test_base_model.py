@@ -185,3 +185,11 @@ def test_empty_json_dict_to_create_model():
         a_field: str = "default-value"
     obj = JModel({})
     assert obj.a_field == "default-value"
+
+
+def test_json_str_as_first_arg():
+    class JModel(JsonModel):
+        my_field: str
+
+    obj = JModel('{"my_field": "a-value"}')
+    assert obj.my_field == 'a-value'

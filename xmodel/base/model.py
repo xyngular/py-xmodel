@@ -1,3 +1,4 @@
+import json
 import sys
 import typing
 
@@ -357,7 +358,11 @@ class BaseModel(ABC):
 
         first_arg = args[0] if args_len > 0 else None
 
-        if isinstance(first_arg, BaseModel):
+        if isinstance(first_arg, str):
+            # We assume `str` is a json-string, parse json and import.
+            json_objs = json.loads(first_arg)
+            api.update_from_json(json_objs)
+        elif isinstance(first_arg, BaseModel):
             # todo: Probably make this recursive, in that we copy sub-base-models as well???
             api.copy_from_model(first_arg)
         elif isinstance(first_arg, Mapping):
@@ -365,7 +370,9 @@ class BaseModel(ABC):
         elif first_arg is not None:
             raise XModelError(
                 f"When a first argument to BaseModel.__init__ is provided, it needs to be a "
-                f"mapping/dict with the json values in it OR a BaseModel instance to copy from; "
+                f"mapping/dict with the json values in it "
+                f"OR a BaseModel instance to copy from "
+                f"OR a str with a json dict/obj to parse inside of string; "
                 f"I was given a type ({type(first_arg)}) with value ({first_arg}) instead."
             )
 
