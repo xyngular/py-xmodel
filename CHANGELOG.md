@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/xyngular/py-xmodel/compare/v0.5.0...v0.6.0) (2023-05-19)
+
+
+### Features
+
+* allow json-strarg as first positional argument for BaseModel. ([4278518](https://github.com/xyngular/py-xmodel/commit/42785180a7a56c8e3e6e0bed7d3eb4b1618586a4))
+
 ## [0.5.0](https://github.com/xyngular/py-xmodel/compare/v0.4.1...v0.5.0) (2023-05-05)
 
 
