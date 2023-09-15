@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/xyngular/py-xmodel/compare/v0.6.0...v0.7.0) (2023-09-15)
+
+
+### Features
+
+* remove unneeded dependency. ([ab67b1d](https://github.com/xyngular/py-xmodel/commit/ab67b1d2d63dbb95c18ae39161cb589b243a9fde))
+
 ## [0.6.0](https://github.com/xyngular/py-xmodel/compare/v0.5.0...v0.6.0) (2023-05-19)
 
 
