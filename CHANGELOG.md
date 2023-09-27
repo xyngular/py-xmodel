@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/xyngular/py-xmodel/compare/v0.7.0...v0.8.0) (2023-09-27)
+
+
+### Features
+
+* number of features to support xdynamo. ([2abd1d7](https://github.com/xyngular/py-xmodel/commit/2abd1d7a103e205b50ada9b1db54b52bdda9952b))
+
 ## [0.7.0](https://github.com/xyngular/py-xmodel/compare/v0.6.0...v0.7.0) (2023-09-15)
 
 
