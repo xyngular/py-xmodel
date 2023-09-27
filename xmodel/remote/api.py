@@ -1,4 +1,5 @@
 import dataclasses
+from decimal import Decimal
 from logging import getLogger
 from typing import (
     TypeVar, Type, get_type_hints, Union, List, Dict, Iterable, Set, Optional, Generic, Mapping,
@@ -238,8 +239,14 @@ class RemoteApi(BaseApi[M]):
         if id is None:
             return None
 
-        structure = self.structure
+        value_type = type(id)
 
+        # Treat a Decimal as a string for the purposes of querying for it.
+        if type(id) is Decimal:
+            id = str(id)
+            value_type = str
+
+        structure = self.structure
         max_query_by_id = structure.max_query_by_id
 
         # todo: Someday, adjust this to only iterate on id as needed, ie: get the first
@@ -275,7 +282,6 @@ class RemoteApi(BaseApi[M]):
                 f"in order to currently be used in `get_via_id` method at the moment."
             )
 
-        value_type = type(id)
         result_is_list = False
 
         if typing_inspect.is_union_type(field_type):
@@ -501,7 +507,10 @@ class RemoteApi(BaseApi[M]):
     # --------- Things REQUIRING an Associated BaseModel -----
 
     def json(
-            self, only_include_changes: bool = False, log_output: bool = False
+        self,
+        only_include_changes: bool = False,
+        log_output: bool = False,
+        include_removals: bool = False
     ) -> Optional[JsonDict]:
         """
         `xmodel.base.api.BaseApi.json` to see superclass's documentation for this method.
@@ -518,7 +527,7 @@ class RemoteApi(BaseApi[M]):
         if only_include_changes and not have_id_value:
             only_include_changes = False
 
-        json = super().json(only_include_changes, log_output)
+        json = super().json(only_include_changes, log_output, include_removals)
 
         if have_id_value and json:
             # todo: Check to see if we have 'id' already?  Also, use the 'id' field's converter!
@@ -526,8 +535,10 @@ class RemoteApi(BaseApi[M]):
             json['id'] = model.id
 
         if only_include_changes and json:
-            fields_to_pop = self.fields_to_pop_for_json(json, self.structure.fields, log_output)
+            fields_to_pop = self.fields_to_pop_for_json(json, self.structure.fields, False)
 
+            # Determine if we need to include the 'id' or not
+            # (which we always do, unless there are no other changes when only_include_changes)
             have_usable_id = self.structure.has_id_field()
             id_is_same = False
             for f in fields_to_pop:
