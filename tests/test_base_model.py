@@ -6,6 +6,7 @@ import pytest
 from xmodel import JsonModel, Field, XModelError
 from enum import Enum
 
+from xmodel.base.api import Remove
 from xmodel.remote import RemoteModel
 
 
@@ -89,6 +90,22 @@ def test_include_with_fields_option():
     # Will return b_field, since 'a_field' was changed; also includes 'a_field', since it's
     # configured to be included when 'b_field' is as well.
     assert m.api.json(only_include_changes=True) == {'a_field': 'a-value-changed', 'b_field': 42}
+
+
+def test_include_removals():
+    original_value = {'a_field': 'a-value', 'b_field': 2}
+    m_obj = MyJModel(original_value)
+
+    # Will return nothing as object was just created.
+    assert m_obj.api.json(only_include_changes=True) is None
+
+    m_obj.a_field = None
+
+    # Will return nothing as object as attribute was only set to be removed/ignored, not changed.
+    assert m_obj.api.json(only_include_changes=True) is None
+
+    # When requesting removals, it should not be included as `Remove`.
+    assert m_obj.api.json(only_include_changes=True, include_removals=True) == {'a_field': Remove}
 
 
 def test_changes_only_embedded_object():

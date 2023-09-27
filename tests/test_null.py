@@ -1,4 +1,5 @@
-from xsentinels.null import Nullable
+import pytest
+from xsentinels.null import Nullable, Null
 from xmodel import BaseModel
 
 
@@ -17,3 +18,11 @@ def test_nullable():
     assert not non_null_field.nullable
     assert nullable_field.type_hint is str
     assert non_null_field.type_hint is int
+
+
+def test_set_nullable_on_not_nullable_field():
+    model = MyModel()
+    model.nullable_field = Null
+
+    with pytest.raises(AttributeError, match='Null value for field.+does not support NullType'):
+        model.non_nullable = Null

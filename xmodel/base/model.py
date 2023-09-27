@@ -404,21 +404,30 @@ class BaseModel(ABC):
         field = structure.get_field(name)
         type_hint = None
 
+        # By default, we go through the special set/converter logic.
+        do_default_attr_set = False
+
         if inspect.isclass(self):
             # If we are a class, just pass it along
-            pass
+            do_default_attr_set = True
         elif name == "api":
             # Don't do anything special with the 'api' var.
-            pass
+            do_default_attr_set = True
         elif name.startswith("_"):
             # don't do anything with private vars
-            pass
+            do_default_attr_set = True
         elif name.endswith("_id") and structure.is_field_a_child(name[:-3], and_has_id=True):
             # We have a virtual field for a related field id, redirect to special setter.
             state = _private.api.get_api_state(api)
             state.set_related_field_id(name[:-3], value)
             return
 
+        if do_default_attr_set:
+            # We don't do anything more if it's a special attribute/field/etc.
+            super().__setattr__(name, value)
+            return
+
+        field = structure.get_field(name)
         if not field:
             # We don't do anything more without a field object
             # (ie: just a normal python attribute of some sort, not tied with API).
@@ -431,7 +440,6 @@ class BaseModel(ABC):
             # otherwise an error will be thrown if we can't verify type or auto-convert it.
             type_hint = field.type_hint
             value_type = type(value)
-            field_obj: Field = structure.get_field(name)
 
             # todo: idea: We could cache some of these details [perhaps even using closures]
             #       or use dict/set's someday for a speed improvement, if we ever need to.
@@ -448,7 +456,9 @@ class BaseModel(ABC):
 
             state = _private.api.get_api_state(api)
             if (
-                # Check for nullability first, as an optimization.
+                # If we have a blank string, but field is not of type str,
+                # and field is also nullable; we then we convert the value into a Null.
+                # (ie: user is setting a blank-string on a non-string field)
                 field.nullable and
                 type_hint not in [str, None] and
                 value_type is str and
@@ -472,16 +482,17 @@ class BaseModel(ABC):
             elif value is Null:
                 # If type_hint supported the Null type, then it would have been dealt with in
                 # the previous if statement.
-                XModelError(
-                    f"Setting a Null value for field ({name}) when typehint ({type_hint}) "
-                    f"does not support NullType, for object ({self})."
-                )
-            elif field_obj.converter:
+                if not field.nullable:
+                    raise AttributeError(
+                        f"Setting a Null value for field ({name}) when typehint ({type_hint}) "
+                        f"does not support NullType, for object ({self})."
+                    )
+            elif field.converter:
                 # todo: Someday map str/int/bool (basic conversions) to standard converter methods;
                 #   kind of like I we do it for date/time... have some default converter methods.
                 #
                 # This handles datetime, date, etc...
-                value = field_obj.converter(api, Converter.Direction.to_model, field_obj, value)
+                value = field.converter(api, Converter.Direction.to_model, field, value)
             elif type_hint in (dict, JsonDict) and value_type in (dict, JsonDict):
                 # this is fine for now, keep it as-is!
                 #
@@ -506,7 +517,7 @@ class BaseModel(ABC):
                         basic_type_converter(
                             api,
                             Converter.Direction.to_model,
-                            field_obj,
+                            field,
                             x
                         ) for x in loop(value)
                     ]
@@ -548,8 +559,8 @@ class BaseModel(ABC):
             if value.startswith('#########'):
                 value = ''
 
-        if field_obj.post_filter:
-            value = field_obj.post_filter(api=api, name=name, value=value)
+        if field.post_filter:
+            value = field.post_filter(api=api, name=name, value=value)
 
         if field.fset:
             field.fset(self, value)

@@ -124,6 +124,9 @@ class Filter(ABC):
 class LowerFilter(Filter):
     """ Lower-cases a value on a `xmodel.base.model.BaseModel` field.
 
+        If the value is false-like, in the case of Null, None or a blank string,
+        it will return that value unaltered.
+
         You can see a real-world example of using this filter on:
         `hubspot.api.Contact.email`
 
@@ -139,6 +142,9 @@ class LowerFilter(Filter):
         >>> assert obj.filtered_attr == "hello"
     """
     def __call__(self, api: "BaseApi", name: str, value: str) -> str:
+        if not value:
+            return value
+
         return value.lower()
 
 

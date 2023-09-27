@@ -131,6 +131,7 @@ from xmodel._private.api.state import PrivateApiState  # noqa - orm private modu
 from logging import getLogger
 from xmodel.errors import XModelError
 from xsentinels.null import Null, NullType
+from xsentinels import Singleton
 from typing import get_type_hints
 from xinject.context import XContext
 from collections.abc import Mapping
@@ -142,6 +143,25 @@ from xmodel.converters import DEFAULT_CONVERTERS
 log = getLogger(__name__)
 
 M = TypeVar("M", bound=BaseModel)
+
+
+class RemoveType(Singleton):
+    """
+    Use `Remove`, this is simply the type for the `Remove` sentinel instance.
+    """
+    pass
+
+
+Remove = RemoveType()
+"""
+When requested, Used to indicate something has been removed in the JSON returned from the
+`BaseApi.json` vs what was originally there; for the purposes of determining if there was
+a change.
+
+Only included in the JSON when explicitly requested; not included by default.
+
+"""
+
 
 
 class BaseApi(Generic[M]):
@@ -305,6 +325,18 @@ class BaseApi(Generic[M]):
         # noinspection PyTypeChecker
         return self.structure.model_cls
 
+    # used as an internal class property
+    _CACHED_TYPE_HINTS = {}
+
+    @classmethod
+    def resolved_type_hints(cls) -> Dict[str, Type]:
+        if hints := BaseApi._CACHED_TYPE_HINTS.get(cls):
+            return hints
+
+        hints = get_type_hints(cls)
+        BaseApi._CACHED_TYPE_HINTS[cls] = hints
+        return hints
+
     # ---------------------------
     # --------- Methods ---------
 
@@ -380,8 +412,8 @@ class BaseApi(Generic[M]):
         if model:
             # If we have a model, the structure should be exactly the same as it's BaseModel type.
             self._structure = api.structure
-            self.default_converters = api.default_converters
             self._api_state = PrivateApiState(model=model)
+            self.default_converters = api.default_converters
             return
 
         # If We don't have a BaseModel, then we need to copy the structure, it could change
@@ -390,7 +422,7 @@ class BaseApi(Generic[M]):
         # type.
 
         # We lookup the structure type that our associated model-type/class wants to use.
-        structure_type = get_type_hints(type(self)).get(
+        structure_type = type(self).resolved_type_hints().get(
             'structure',
             BaseStructure[Field]
         )
@@ -401,6 +433,7 @@ class BaseApi(Generic[M]):
         # We have a root BaseModel with the abstract BaseModel as its super class,
         # in this case we need to allocate a blank structure object.
         # todo: allocate structure with new args
+        # We look up the structure type that our associated model-type/class wants to use.
         existing_struct = api.structure if api else None
         self._structure = structure_type(
             parent=existing_struct,
@@ -515,7 +548,10 @@ class BaseApi(Generic[M]):
         return self.json(only_include_changes=True) is not None
 
     def json(
-        self, only_include_changes: bool = False, log_output: bool = False
+        self,
+        only_include_changes: bool = False,
+        log_output: bool = False,
+        include_removals: bool = False
     ) -> Optional[JsonDict]:
         """ REQUIRES associated model object (see `BaseApi.model` for details on this).
 
@@ -550,6 +586,11 @@ class BaseApi(Generic[M]):
             log_output (bool): If False (default): won't log anything.
                 If True: Logs what method returns at debug level.
 
+           include_removals (bool): If False (default): won't include in response any fields
+                that have been removed
+                (vs when compared to the original JSON that updated this object).
+                The value will be the special sentinel object `Remove`
+                (see top of this module/file for `Remove` object, and it's `RemoveType` class).
 
         Returns:
             JsonDict: Will the needed attributes that should be sent to API.
@@ -683,6 +724,17 @@ class BaseApi(Generic[M]):
             # Sets field value into a sub-dictionary of the original `json` dict.
             set_value_into_json_dict(v, name, json=d)
 
+        if include_removals:
+            removals = self.fields_to_remove_for_json(json, field_objs)
+            for f in removals:
+                if f in json:
+                    raise XynModelError(
+                        f"Sanity check, we were about to overwrite real value with `Remove` "
+                        f"in json field ({f}) for model ({self.model})."
+                    )
+
+                json[f] = Remove
+
         # If the `last_original_update_json` is None, then we never got update via JSON
         # so there is nothing to compare, include everything!
         if only_include_changes:
@@ -693,7 +745,7 @@ class BaseApi(Generic[M]):
                 del json[f]
 
             if not json:
-                # If nothing in JSON, then return None.
+                # There were no changes, return None.
                 return None
         else:
             due_to_msg = "unknown"
@@ -719,6 +771,22 @@ class BaseApi(Generic[M]):
 
         return json
 
+    def fields_to_remove_for_json(self, json: dict, field_objs: List[Field]) -> Set[str]:
+        """
+        Returns set of fields that should be considered 'changed' because they were removed
+        when compared to the original JSON values used to originally update this object.
+
+        The names will be the fields json_path.
+        """
+        fields_to_remove = set()
+        for field in field_objs:
+            # A `None` in the `json` means a null, so we use `Default` as our sentinel type.
+            new_value = json.get(field.json_path, Default)
+            old_value = self._get_old_json_value(field=field.json_path, as_type=type(new_value))
+            if new_value is Default and old_value is not Default:
+                fields_to_remove.add(field.json_path)
+        return fields_to_remove
+
     def fields_to_pop_for_json(
             self, json: dict, field_objs: List[Field], log_output: bool
     ) -> Set[Any]:
@@ -735,7 +803,6 @@ class BaseApi(Generic[M]):
         """
         fields_to_pop = set()
         for field, new_value in json.items():
-
             # json has simple strings, numbers, lists, dict;
             # so makes general comparison simpler.
             old_value = self._get_old_json_value(field=field, as_type=type(new_value))
@@ -779,13 +846,25 @@ class BaseApi(Generic[M]):
 
     def should_include_field_in_json(self, new_value: Any, old_value: Any, field: str) -> bool:
         """
-        Returns True if the the value for field should be included in the JSON.
+        Returns True if the value for field should be included in the JSON.
         This only gets called if only_include_changes is True when passed to self.json::
 
             # Passed in like so:
             self.json(only_include_changes=True)
 
         This method is an easy way to change the comparison logic.
+
+        `new_value` could be `xyn_types.default.Default`, to indicate that a value's
+        absence is significant (ie: to remove an attribute from destination).
+
+        Most of the time, a value's absence does not affect the destination when object
+        is sent to API/Service because whatever value is currently there for the attribute
+        is left intact/alone.
+
+        But sometimes a service will remove the attribute if it does not exist.
+        When this is the case, the absence of the value is significant for comparison purposes;
+        ie: when deciding if a value has changed.
+
 
         :param new_value: New value that will be put into JSON.
         :param old_value:
