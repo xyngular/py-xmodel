@@ -1,4 +1,5 @@
 import dataclasses
+import uuid
 from decimal import Decimal
 from logging import getLogger
 from typing import (
@@ -242,7 +243,7 @@ class RemoteApi(BaseApi[M]):
         value_type = type(id)
 
         # Treat a Decimal as a string for the purposes of querying for it.
-        if type(id) is Decimal:
+        if type(id) in (Decimal, uuid.UUID):
             id = str(id)
             value_type = str
 
