@@ -1,3 +1,5 @@
+import uuid
+
 import ciso8601
 
 from xmodel.base.fields import Converter, Field
@@ -255,4 +257,5 @@ DEFAULT_CONVERTERS: Dict[Type, Converter] = {
     float: ConvertBasicType(basic_type=float),
     str: ConvertBasicType(basic_type=str),
     bool: ConvertBasicBool(),
+    uuid.UUID: ConvertBasicType(basic_type=str),
 }
