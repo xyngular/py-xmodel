@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0](https://github.com/xyngular/py-xmodel/compare/v0.9.0...v1.0.0) (2023-12-20)
+
+
+### Features
+
+* update to support Python 3.12 + xurls 1.0 release. ([7663a28](https://github.com/xyngular/py-xmodel/commit/7663a286365ad354b339a21844f3916ed1b09fdf))
+
 ## [0.9.0](https://github.com/xyngular/py-xmodel/compare/v0.8.0...v0.9.0) (2023-11-09)
 
 
