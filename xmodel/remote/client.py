@@ -1,6 +1,6 @@
 import weakref
 from xurls.url import (
-    URLStr, Query
+    UrlStr, Query
 )
 from xinject import Dependency, XContext
 from xmodel.common.types import FieldNames
@@ -175,7 +175,7 @@ class RemoteClient(Generic[M]):
         raise NotImplementedError(f"Implement `delete_objs()` on ({type(self)}).")
 
     def send_objs(
-            self, objs: Sequence[M], *, url: URLStr = None, send_limit: int = None
+            self, objs: Sequence[M], *, url: UrlStr = None, send_limit: int = None
     ):
         raise NotImplementedError(f"Implement `send_objs()` on ({type(self)}).")
 

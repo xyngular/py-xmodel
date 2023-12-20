@@ -219,7 +219,7 @@ class RemoteApi(BaseApi[M]):
                 all of them and checking the `first_name` attribute yourself if you expect
                 only a few of these objects to actually match.
 
-                These won't be split up into segments [to keep URL/Request smaller] like the
+                These won't be split up into segments [to keep Url/Request smaller] like the
                 id/keys are.
                 We are not able to use the id-cache if these are provided, we may always have
                 to go to the API. This may change at some point in the future [by executing the
@@ -330,7 +330,7 @@ class RemoteApi(BaseApi[M]):
                 return None
 
         # We can assume at this point a list of ID's to get and a list of objects to return.
-        # We only want to do about 100 at a time [due to URL length limits in production].
+        # We only want to do about 100 at a time [due to Url length limits in production].
 
         results = []
         id_list = []
@@ -362,8 +362,8 @@ class RemoteApi(BaseApi[M]):
                 elif obj_id and type(obj_id) is str:
                     #   I think we can assume people using our method will NOT pass in comma
                     #   separated values, if there is a comma they would want it to be part
-                    #   of the ID [ie: they are passing us lists/dicts here, and we let the URL
-                    #   formatter deal with how to encode that into the URL [ie: by comma, etc]...
+                    #   of the ID [ie: they are passing us lists/dicts here, and we let the Url
+                    #   formatter deal with how to encode that into the Url [ie: by comma, etc]...
                     #
                     # todo: Talk to Kaden, see why he put this in here originally.
                     #   Probably remove the comma splitting...

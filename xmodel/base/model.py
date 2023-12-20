@@ -113,7 +113,7 @@ class BaseModel(ABC):
 
     .. note:: In the case of `base_url` example above, it's the base-url-endpoint for the model.
         If you want to know more about that see `xmodel.rest.RestClient.url_for_endpoint`.
-        It has details on how the final request `xurls.url.URL` is constructed.
+        It has details on how the final request `xurls.url.Url` is constructed.
 
     This class also allows you to more easily with with JSON data via:
 
