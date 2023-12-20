@@ -1,7 +1,7 @@
 from typing import Dict, List, Any, Optional, Union, TypeVar, Generic
 # noinspection PyPep8Naming
 from enum import Enum, auto as EnumAuto  # noqa
-from xurls.url import URL
+from xurls.url import Url
 from abc import ABC, abstractmethod
 
 T = TypeVar("T")
@@ -19,7 +19,7 @@ class ErrorHandler(Generic[T], ABC):
         See `HttpErrorHandler.__call__` for details.
     """
     @abstractmethod
-    def __call__(self, obj: T, http: "ResponseState[T]", url: URL) -> bool:
+    def __call__(self, obj: T, http: "ResponseState[T]", url: Url) -> bool:
         """
         Signature of the call that happens for an HttpErrorHandler.
 
@@ -38,9 +38,9 @@ class ErrorHandler(Generic[T], ABC):
             http (ResponseState): The `xmodel.remote.api.RemoteApi.response_state` object,
                 passed in here for convenience.
 
-            url (xurls.URL): url that was used. You can ask the url for the http method that
-                was used, there will always only be exactly ONE method assigned to the URL you get
-                here (`xurls.URL.methods`).
+            url (xurls.Url): url that was used. You can ask the url for the http method that
+                was used, there will always only be exactly ONE method assigned to the Url you get
+                here (`xurls.Url.methods`).
         """
         return False
 

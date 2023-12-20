@@ -7,8 +7,8 @@ import datetime as dt
 from typing import Union, TYPE_CHECKING, Type, TypeVar, Generic, Dict, Any
 from xsentinels.null import Null, NullType, Nullable
 from xmodel.errors import XModelError
-from distutils.util import strtobool
 from decimal import Decimal
+from xbool import bool_value
 
 _to_obj_directions = {Converter.Direction.from_json, Converter.Direction.to_model}
 Direction = Converter.Direction
@@ -126,7 +126,7 @@ class ConvertBasicType(Converter, Generic[T]):
 class ConvertBasicBool(ConvertBasicType[bool]):
     def convert_basic_value(self, value) -> T:
         if isinstance(value, str):
-            return strtobool(value)
+            return bool_value(value)
         return super().convert_basic_value(value)
 
     def __init__(self):

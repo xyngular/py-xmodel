@@ -12,13 +12,14 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.10"
 typing-inspect = "^0"
 xloop = "^1.0.1"
 xinject = "^1.4.0"
 xsentinels = "^1.2.1"
-xurls = "^0.2.0"
+xurls = "^1.0.0"
 ciso8601 = "^2.3.0"
+xbool = "^1.1.0"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -35,6 +36,7 @@ mkdocs = "^1.4.2"
 mkdocs-material = "^9.0.12"
 mike = "^1.1.2"
 tomlkit = "^0.11.7"
+setuptools = "^69.0.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
