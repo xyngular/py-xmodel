@@ -1,4 +1,4 @@
-import uuid
+from uuid import UUID
 
 import ciso8601
 
@@ -249,6 +249,35 @@ def convert_decimal(
     return Decimal(value)
 
 
+def convert_uuid(
+    api,
+    direction: Direction,
+    field: Field,
+    value: Any,
+):
+    if value is None or value is Null:
+        return value
+
+    if direction is Direction.to_json:
+        # Convert UUID object into a str.
+        return str(value)
+
+    if direction not in (Direction.to_model, Direction.from_json):
+        # We don't know the direction (new direct?)
+        raise XModelError(
+            f"Unknown direction ({direction}), can't convert value ({value}); "
+            f"is this a new direction I need to handle?"
+        )
+
+    # Going into model, return a Decimal.
+    # Decimal class
+    if isinstance(value, UUID):
+        return value
+
+    return UUID(value)
+
+
+
 DEFAULT_CONVERTERS: Dict[Type, Converter] = {
     Decimal: convert_decimal,
     dt.date: convert_json_date,
@@ -257,5 +286,5 @@ DEFAULT_CONVERTERS: Dict[Type, Converter] = {
     float: ConvertBasicType(basic_type=float),
     str: ConvertBasicType(basic_type=str),
     bool: ConvertBasicBool(),
-    uuid.UUID: ConvertBasicType(basic_type=str),
+    UUID: convert_uuid,
 }
