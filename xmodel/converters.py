@@ -276,7 +276,6 @@ def convert_uuid(
     return UUID(value)
 
 
-
 DEFAULT_CONVERTERS: Dict[Type, Converter] = {
     Decimal: convert_decimal,
     dt.date: convert_json_date,
