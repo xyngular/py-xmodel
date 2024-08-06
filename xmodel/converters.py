@@ -269,8 +269,7 @@ def convert_uuid(
             f"is this a new direction I need to handle?"
         )
 
-    # Going into model, return a Decimal.
-    # Decimal class
+    # Going into model, return a UUID.
     if isinstance(value, UUID):
         return value
 
