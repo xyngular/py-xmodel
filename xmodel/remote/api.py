@@ -1,5 +1,5 @@
 import dataclasses
-import uuid
+from uuid import UUID
 from decimal import Decimal
 from logging import getLogger
 from typing import (
@@ -147,10 +147,10 @@ class RemoteApi(BaseApi[M]):
     def get_via_id(
             self,
             id: Union[
-                Union[int, str],
-                List[Union[int, str]],
-                Dict[str, Union[str, int]],
-                List[Dict[str, Union[str, int]]],
+                    int | str | UUID,
+                    List[int | str | UUID],
+                    Dict[str, str | int | UUID],
+                    List[Dict[str, str | int | UUID]],
             ],
             fields: FieldNames = Default,
             id_field: str = None,
@@ -243,7 +243,7 @@ class RemoteApi(BaseApi[M]):
         value_type = type(id)
 
         # Treat a Decimal as a string for the purposes of querying for it.
-        if type(id) in (Decimal, uuid.UUID):
+        if type(id) in (Decimal, UUID):
             id = str(id)
             value_type = str
 
