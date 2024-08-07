@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.1](https://github.com/xyngular/py-xmodel/compare/v1.0.0...v1.0.1) (2024-08-06)
+
+
+### Bug Fixes
+
+* now importing UUID directly, so use it directly. ([1eb55d9](https://github.com/xyngular/py-xmodel/commit/1eb55d9331dc71d87ddcc8b6c15cea89381698ba))
+* support UUID's correctly; convert them to/from JSON correctly. ([a278905](https://github.com/xyngular/py-xmodel/commit/a278905354b3e2a5665a252c0a066e3e8f8248df))
+* typehint to allow UUID for get_via_id (was always previously supported). ([3ff953b](https://github.com/xyngular/py-xmodel/commit/3ff953b6c9e5a8f699491492f7eabf135dd2bbd2))
+
 ## [1.0.0](https://github.com/xyngular/py-xmodel/compare/v0.9.0...v1.0.0) (2023-12-20)
 
 
